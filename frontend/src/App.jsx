@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { UploadCloud, FileText, CheckCircle2, AlertTriangle, ShieldAlert, FileDown, Search, ArrowRight, RefreshCw, BarChart, Activity } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Toaster, toast } from 'sonner';
 import './index.css';
 
 export default function App() {
@@ -39,8 +40,9 @@ export default function App() {
       const data = await res.json();
       setResults(data);
       setSelectedIdx(0);
+      toast.success("Analysis complete! 🧠");
     } catch (e) {
-      alert("Error: " + e.message);
+      toast.error("Failed to analyze: " + e.message);
     }
     setLoading(false);
   };
@@ -52,8 +54,9 @@ export default function App() {
       const res = await fetch("http://localhost:8000/api/monitor/check-once/live");
       const data = await res.json();
       setTrackResult(data);
+      toast.success("Live Scrape successful!");
     } catch(e) {
-      alert("Scraper Error: " + e.message);
+      toast.error("Scraper Error: " + e.message);
     }
     setTracking(false);
   };
@@ -65,13 +68,14 @@ export default function App() {
       const res = await fetch("http://localhost:8000/api/analyze/live", { method: "POST" });
       const data = await res.json();
       if(data.message) {
-        alert(data.message);
+        toast.error(data.message);
       } else {
         setResults(data);
         setSelectedIdx(0);
+        toast.success("Live intercept analyzed!");
       }
     } catch (e) {
-      alert("Error: " + e.message);
+      toast.error("Network Error: " + e.message);
     }
     setLoading(false);
   };
@@ -89,8 +93,9 @@ export default function App() {
       a.href = url;
       a.download = "RegulaIntel_Report.pdf";
       a.click();
+      toast.success("Professional Audit exported!");
     } catch (e) {
-      alert("Failed to download PDF.");
+      toast.error("Failed to download PDF.");
     }
   };
 
@@ -112,28 +117,29 @@ export default function App() {
   const panelAnim = { hidden: { opacity: 0, scale: 0.98 }, show: { opacity: 1, scale: 1, transition: { duration: 0.4, ease: "easeOut" } } };
 
   return (
-    <div className="h-screen w-full flex flex-col pt-3 pb-6 px-6 max-w-7xl mx-auto overflow-hidden relative z-10">
+    <div className="h-screen w-full flex flex-col pt-3 pb-6 px-4 md:px-6 max-w-7xl mx-auto overflow-hidden relative z-10">
+      <Toaster position="bottom-right" richColors />
       
       {/* Topnav */}
-      <motion.div initial={{ y: -20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="flex justify-between items-center pb-4 mb-4 border-b border-slate-200/50">
-        <div className="flex items-center gap-3">
+      <motion.div initial={{ y: -20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="flex flex-col md:flex-row justify-between items-center gap-4 pb-4 mb-4 border-b border-slate-200/50">
+        <div className="flex items-center gap-3 w-full md:w-auto">
           <motion.div whileHover={{ rotate: 15 }} className="bg-blue-600 p-2 rounded-xl shadow-lg shadow-blue-600/30">
             <ShieldAlert className="text-white" size={24}/>
           </motion.div>
           <div>
-            <span className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-slate-900 to-slate-600 tracking-tight">RegulaIntel</span>
+            <span className="text-xl md:text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-slate-900 to-slate-600 tracking-tight">RegulaIntel</span>
             <span className="ml-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white text-[10px] uppercase font-bold py-1 px-2.5 rounded-full tracking-wider shadow-sm">AI-Powered</span>
           </div>
         </div>
-        <div className="text-sm font-medium text-slate-500 bg-white/50 px-3 py-1.5 rounded-full backdrop-blur-sm border border-white/50 shadow-sm">
+        <div className="text-xs md:text-sm text-center md:text-left font-medium text-slate-500 bg-white/50 px-3 py-1.5 rounded-full backdrop-blur-sm border border-white/50 shadow-sm w-full md:w-auto">
           Autonomous Regulatory Compliance &bull; Financial Sector
         </div>
       </motion.div>
 
-      <div className="flex gap-6 flex-1 min-h-0">
+      <div className="flex flex-col lg:flex-row gap-6 flex-1 min-h-0 overflow-y-auto lg:overflow-hidden pb-10 lg:pb-0">
         
         {/* LEFT COLUMN - Sources & Uploads */}
-        <motion.div variants={panelAnim} initial="hidden" animate="show" className="flex-1 flex flex-col min-w-[280px]">
+        <motion.div variants={panelAnim} initial="hidden" animate="show" className="w-full lg:w-1/3 xl:w-1/4 lg:flex-1 flex flex-col min-w-[280px]">
           <div className="glass-panel flex-1 p-6 overflow-y-auto">
             <div className="section-label flex items-center gap-1.5"><Activity size={14} className="text-blue-500"/> Intelligence Sources</div>
             
@@ -229,7 +235,7 @@ export default function App() {
         </motion.div>
 
         {/* CENTER COLUMN - Feed */}
-        <motion.div variants={panelAnim} initial="hidden" animate="show" transition={{ delay: 0.1 }} className="flex-[2] flex flex-col min-w-[420px]">
+        <motion.div variants={panelAnim} initial="hidden" animate="show" transition={{ delay: 0.1 }} className="w-full lg:w-1/2 xl:w-2/5 lg:flex-[2] flex flex-col min-w-0 lg:min-w-[420px]">
           <div className="glass-panel flex-1 p-6 overflow-y-auto relative">
             <div className="flex justify-between items-end mb-5">
               <div className="section-label flex items-center gap-1.5 m-0"><FileText size={14} className="text-emerald-500"/> Intelligence Feed</div>
@@ -298,7 +304,7 @@ export default function App() {
         </motion.div>
 
         {/* RIGHT COLUMN - Impact */}
-        <motion.div variants={panelAnim} initial="hidden" animate="show" transition={{ delay: 0.2 }} className="flex-[1.5] flex flex-col min-w-[340px]">
+        <motion.div variants={panelAnim} initial="hidden" animate="show" transition={{ delay: 0.2 }} className="w-full lg:w-1/3 xl:w-[35%] lg:flex-[1.5] flex flex-col min-w-0 lg:min-w-[340px]">
           <div className="glass-panel flex-1 p-6 overflow-y-auto">
             <div className="section-label flex items-center gap-1.5"><AlertTriangle size={14} className="text-amber-500"/> Action & Impact</div>
 
