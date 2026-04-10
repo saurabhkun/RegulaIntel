@@ -1,6 +1,8 @@
 <div align="center">
   <img src="https://img.shields.io/badge/Status-Hackathon_Ready-blueviolet?style=for-the-badge" alt="Status" />
   <img src="https://img.shields.io/badge/Version-1.0.0-blue?style=for-the-badge" alt="Version" />
+  <img src="https://img.shields.io/badge/Team-ACCIO-orange?style=for-the-badge" alt="Team ACCIO" />
+  <img src="https://img.shields.io/badge/Team_ID-28012068-darkgreen?style=for-the-badge" alt="Team ID 28012068" />
 </div>
 
 <br/>
