@@ -7,6 +7,7 @@ import { toast } from 'sonner'
 
 const Register = () => {
   const [formData, setFormData] = useState({
+    fullName: '',
     email: '',
     password: '',
     company: ''
@@ -25,6 +26,7 @@ const Register = () => {
         password: formData.password,
         options: {
           data: {
+            full_name: formData.fullName,
             company: formData.company
           }
         }
@@ -39,40 +41,60 @@ const Register = () => {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 text-on-background">
+    <div className="min-h-screen flex items-center justify-center p-4 bg-zinc-950 text-zinc-50 relative selection:bg-indigo-500/30">
+      {/* Soft background glow */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none opacity-50"></div>
+      
       <motion.div 
-        initial={{ opacity: 0, y: 30 }}
+        initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
-        className="glass-panel max-w-md w-full p-8 space-y-6 rounded-xl border border-cyan-500/30 shadow-[0_0_40px_rgba(0,242,255,0.1)] relative overflow-hidden"
+        className="max-w-md w-full p-10 space-y-8 rounded-2xl border border-zinc-800 bg-zinc-900/60 backdrop-blur-xl shadow-2xl relative overflow-hidden"
       >
-        <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-transparent pointer-events-none"></div>
-        <div className="text-center space-y-3 relative z-10">
+        <div className="text-center space-y-4 relative z-10">
           <motion.div 
             whileHover={{ scale: 1.05 }}
-            className="mx-auto w-16 h-16 bg-surface-container-highest rounded-xl flex items-center justify-center border border-primary/30 shadow shadow-cyan-500/50"
+            className="mx-auto w-14 h-14 bg-zinc-800 rounded-xl flex items-center justify-center shadow-inner border border-zinc-700"
           >
-            <span className="material-symbols-outlined text-cyan-400 text-3xl">add_moderator</span>
+            <span className="material-symbols-outlined text-zinc-100 text-2xl">add_moderator</span>
           </motion.div>
-          <h1 className="text-2xl font-black font-['Space_Grotesk'] tracking-widest text-cyan-400 uppercase drop-shadow-[0_0_8px_rgba(0,242,255,0.4)]">
-            Join RegulaIntel
-          </h1>
-          <p className="text-slate-400 text-[10px] font-['Space_Grotesk'] uppercase tracking-widest font-bold border-b border-cyan-500/20 pb-4 inline-block">
-            Establish Secure Compliance Node
-          </p>
+          <div>
+            <h1 className="text-2xl font-bold tracking-tight text-white mb-1">
+              Create an Account
+            </h1>
+            <p className="text-zinc-400 text-sm font-medium">
+              Join RegulaIntel and establish your compliance node.
+            </p>
+          </div>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4 relative z-10">
           <div>
-            <label className="block text-[10px] font-bold font-['Space_Grotesk'] uppercase tracking-widest text-cyan-300 mb-2">
-              Organization Name
+            <label className="block text-xs font-semibold uppercase tracking-wider text-zinc-400 mb-2 px-1">
+              Full Name
             </label>
             <div className="relative">
-              <Building className="absolute left-3 top-1/2 -translate-y-1/2 text-cyan-500/50 w-4 h-4" />
+              <span className="material-symbols-outlined absolute left-3.5 top-1/2 -translate-y-1/2 text-zinc-500 text-[18px]">person</span>
+              <input
+                type="text"
+                value={formData.fullName}
+                onChange={(e) => setFormData({...formData, fullName: e.target.value})}
+                className="w-full pl-11 pr-4 py-3 border border-zinc-700 rounded-xl bg-zinc-900 text-zinc-100 focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 transition-all text-sm placeholder-zinc-600 outline-none"
+                placeholder="Jane Doe"
+                required
+              />
+            </div>
+          </div>
+          <div>
+            <label className="block text-xs font-semibold uppercase tracking-wider text-zinc-400 mb-2 px-1">
+              Organization
+            </label>
+            <div className="relative">
+              <Building className="absolute left-3.5 top-1/2 -translate-y-1/2 text-zinc-500 w-4 h-4" />
               <input
                 type="text"
                 value={formData.company}
                 onChange={(e) => setFormData({...formData, company: e.target.value})}
-                className="w-full pl-10 pr-4 py-3 border border-cyan-500/20 rounded-lg bg-surface-container-lowest text-cyan-50 focus:ring-1 focus:ring-cyan-400 focus:border-cyan-400 transition-all font-mono text-sm placeholder-slate-600"
+                className="w-full pl-11 pr-4 py-3 border border-zinc-700 rounded-xl bg-zinc-900 text-zinc-100 focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 transition-all text-sm placeholder-zinc-600 outline-none"
                 placeholder="Global Assets Ltd."
                 required
               />
@@ -80,16 +102,16 @@ const Register = () => {
           </div>
 
           <div>
-            <label className="block text-[10px] font-bold font-['Space_Grotesk'] uppercase tracking-widest text-cyan-300 mb-2">
-              Officer Comm Channel
+            <label className="block text-xs font-semibold uppercase tracking-wider text-zinc-400 mb-2 px-1">
+              Email Address
             </label>
             <div className="relative">
-              <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-cyan-500/50 w-4 h-4" />
+              <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 text-zinc-500 w-4 h-4" />
               <input
                 type="email"
                 value={formData.email}
                 onChange={(e) => setFormData({...formData, email: e.target.value})}
-                className="w-full pl-10 pr-4 py-3 border border-cyan-500/20 rounded-lg bg-surface-container-lowest text-cyan-50 focus:ring-1 focus:ring-cyan-400 focus:border-cyan-400 transition-all font-mono text-sm placeholder-slate-600"
+                className="w-full pl-11 pr-4 py-3 border border-zinc-700 rounded-xl bg-zinc-900 text-zinc-100 focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 transition-all text-sm placeholder-zinc-600 outline-none"
                 placeholder="officer@company.com"
                 required
               />
@@ -97,16 +119,16 @@ const Register = () => {
           </div>
 
           <div>
-            <label className="block text-[10px] font-bold font-['Space_Grotesk'] uppercase tracking-widest text-cyan-300 mb-2">
-              Security Key
+            <label className="block text-xs font-semibold uppercase tracking-wider text-zinc-400 mb-2 px-1">
+              Secure Password
             </label>
             <div className="relative">
-              <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-cyan-500/50 w-4 h-4" />
+              <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 text-zinc-500 w-4 h-4" />
               <input
                 type={showPassword ? 'text' : 'password'}
                 value={formData.password}
                 onChange={(e) => setFormData({...formData, password: e.target.value})}
-                className="w-full pl-10 pr-10 py-3 border border-cyan-500/20 rounded-lg bg-surface-container-lowest text-cyan-50 focus:ring-1 focus:ring-cyan-400 focus:border-cyan-400 transition-all font-mono text-sm placeholder-slate-600"
+                className="w-full pl-11 pr-11 py-3 border border-zinc-700 rounded-xl bg-zinc-900 text-zinc-100 focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 transition-all text-sm placeholder-zinc-600 outline-none"
                 placeholder="Min. 8 characters"
                 required
                 minLength={8}
@@ -114,7 +136,7 @@ const Register = () => {
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-cyan-500/50 hover:text-cyan-400 transition-colors"
+                className="absolute right-3.5 top-1/2 -translate-y-1/2 text-zinc-500 hover:text-zinc-300 transition-colors"
                 tabIndex="-1"
               >
                 {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
@@ -125,25 +147,25 @@ const Register = () => {
           <motion.button
             type="submit"
             disabled={loading}
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            className="w-full bg-cyan-500/10 border border-cyan-400 text-cyan-400 font-bold py-3 px-4 rounded-lg shadow-[0_0_15px_rgba(0,242,255,0.2)] hover:bg-cyan-500/20 hover:shadow-[0_0_20px_rgba(0,242,255,0.4)] transition-all font-['Space_Grotesk'] text-[12px] uppercase tracking-widest disabled:opacity-50 flex justify-center items-center gap-2 mt-4"
+            whileHover={{ scale: 1.01 }}
+            whileTap={{ scale: 0.99 }}
+            className={`w-full py-3.5 px-4 mt-8 rounded-xl font-bold text-[12px] uppercase tracking-wider transition-all flex justify-center items-center gap-2 ${loading ? 'bg-zinc-800 text-zinc-500' : 'bg-white text-zinc-950 hover:bg-zinc-200'}`}
           >
             {loading ? (
               <>
-                <span className="material-symbols-outlined animate-spin text-sm">sync</span>
-                Generating...
+                <span className="material-symbols-outlined animate-spin text-[16px]">sync</span>
+                Provisioning...
               </>
             ) : (
               'Deploy Network Node'
             )}
           </motion.button>
 
-          <div className="text-center pt-2">
-            <p className="text-[10px] font-['Space_Grotesk'] text-slate-500 uppercase tracking-widest">
-              Existing Authorized User?{' '}
-              <Link to="/login" className="font-bold text-cyan-500 hover:text-cyan-300 transition-colors border-b border-transparent hover:border-cyan-300 pb-0.5 ml-1">
-                Access Port
+          <div className="text-center pt-5 border-t border-zinc-800 mt-6">
+            <p className="text-sm font-medium text-zinc-500">
+              Already have clearance?{' '}
+              <Link to="/login" className="font-semibold text-white hover:text-indigo-400 transition-colors">
+                Sign In
               </Link>
             </p>
           </div>

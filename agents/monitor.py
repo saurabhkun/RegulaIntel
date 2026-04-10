@@ -26,6 +26,10 @@ MCA_URLS = {
     "notifications": "https://www.mca.gov.in/content/dam/mca/notification/",
 }
 
+IRDAI_URLS = {
+    "circulars": "https://irdai.gov.in/document-library",
+}
+
 # Track last checked time
 LAST_CHECKED_FILE = "data/last_checked.json"
 
@@ -124,6 +128,33 @@ def _fetch_mca_notices() -> List[Dict]:
     
     return notices
 
+def _fetch_irdai_circulars() -> List[Dict]:
+    """Fetch IRDAI circulars via web scraping."""
+    circulars = []
+    try:
+        from bs4 import BeautifulSoup
+        
+        for doc_type, url in IRDAI_URLS.items():
+            response = requests.get(url, timeout=10)
+            response.raise_for_status()
+            soup = BeautifulSoup(response.content, 'html.parser')
+            
+            for link in soup.find_all('a', href=True)[:5]:
+                href = link['href']
+                if '.pdf' in href.lower():
+                    circular = {
+                        "source": "IRDAI",
+                        "type": doc_type,
+                        "title": link.get_text(strip=True) or "IRDAI Document",
+                        "link": href if href.startswith('http') else f"https://irdai.gov.in{href}",
+                        "published": datetime.now().isoformat(),
+                    }
+                    circulars.append(circular)
+    except Exception as e:
+        print(f"Error fetching IRDAI circulars: {e}")
+    
+    return circulars
+
 def _download_pdf(url: str, filename: str) -> bool:
     """Download PDF from URL and save locally."""
     try:
@@ -169,6 +200,7 @@ def check_new_circulars(mode: str = "demo") -> list:
         all_sources.extend(_fetch_rbi_circulars())
         all_sources.extend(_fetch_sebi_circulars())
         all_sources.extend(_fetch_mca_notices())
+        all_sources.extend(_fetch_irdai_circulars())
         
         print(f"Found {len(all_sources)} new circulars")
         

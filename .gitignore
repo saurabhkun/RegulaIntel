@@ -32,3 +32,30 @@ Thumbs.db
 # Vector DB
 .chroma/
 chroma.sqlite3
+
+# IDE
+.vscode/
+.idea/
+*.code-workspace
+*.swp
+*.swo
+
+# Python build & distribution
+dist/
+build/
+*.egg-info/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Logs & Temp files
+*.log
+execution_logs/
+data/execution_logs/
+temp/
+tmp/
+
+# Generated files
+compliance_report.pdf
+*.pdf_temp
+.DS_Store

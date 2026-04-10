@@ -115,7 +115,8 @@ async def get_detailed_impact(amendments: list):
     - Testing requirements
     """
     try:
-        impact_summary = {
+        from typing import Dict, Any
+        impact_summary: Dict[str, Any] = {
             "total_amendments": len(amendments),
             "departments_affected": {},
             "systems_affected": {},
@@ -128,26 +129,26 @@ async def get_detailed_impact(amendments: list):
         for amend in amendments:
             # Aggregate department impacts
             dept = amend.get("department", "Unknown")
-            if dept not in impact_summary["departments_affected"]:
-                impact_summary["departments_affected"][dept] = []
-            impact_summary["departments_affected"][dept].append({
+            if dept not in impact_summary["departments_affected"]: # type: ignore
+                impact_summary["departments_affected"][dept] = [] # type: ignore
+            impact_summary["departments_affected"][dept].append({ # type: ignore
                 "policy": amend.get("policy_name"),
                 "section": amend.get("section_id")
             })
             
             # Aggregate system impacts
             for system in amend.get("affected_systems", []):
-                if system not in impact_summary["systems_affected"]:
-                    impact_summary["systems_affected"][system] = 0
-                impact_summary["systems_affected"][system] += 1
+                if system not in impact_summary["systems_affected"]: # type: ignore
+                    impact_summary["systems_affected"][system] = 0 # type: ignore
+                impact_summary["systems_affected"][system] += 1 # type: ignore
             
             # Track implementation effort
             effort = amend.get("implementation_effort", "MEDIUM")
-            impact_summary["implementation_effort"][effort] += 1
+            impact_summary["implementation_effort"][effort] += 1 # type: ignore
             
             # Track testing needs
             if amend.get("testing_required", True):
-                impact_summary["testing_requirements"].append({
+                impact_summary["testing_requirements"].append({ # type: ignore
                     "policy": amend.get("policy_name"),
                     "section": amend.get("section_id"),
                     "systems": amend.get("affected_systems", [])
@@ -155,10 +156,10 @@ async def get_detailed_impact(amendments: list):
             
             # Collect affected roles
             for role in amend.get("affected_roles", []):
-                impact_summary["affected_roles"].add(role)
+                impact_summary["affected_roles"].add(role) # type: ignore
         
         # Convert set to list for JSON serialization
-        impact_summary["affected_roles"] = list(impact_summary["affected_roles"])
+        impact_summary["affected_roles"] = list(impact_summary["affected_roles"]) # type: ignore
         
         return JSONResponse(content=impact_summary)
     except Exception as e:
@@ -238,7 +239,7 @@ async def get_execution_logs():
         log_files = glob.glob("data/execution_logs/*_summary.json")
         logs = []
         
-        for log_file in sorted(log_files, reverse=True)[:10]:  # Last 10
+        for log_file in sorted(log_files, reverse=True)[:10]:  # type: ignore
             with open(log_file, 'r') as f:
                 logs.append(json.load(f))
         

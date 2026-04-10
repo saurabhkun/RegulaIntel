@@ -3,9 +3,10 @@ import os
 import uuid
 from datetime import datetime
 from typing import List, Dict
-from pydantic import BaseModel
+from dataclasses import dataclass
 
-class ExecutionPlan(BaseModel):
+@dataclass
+class ExecutionPlan:
     plan_id: str
     execution_order: List[str]
     critical_path: List[str]
@@ -20,7 +21,7 @@ class Executor:
         self.audit_trail_path = os.path.join(log_dir, "audit_trail.json")
 
     def _create_execution_plan(self, amendments: List[Dict]) -> ExecutionPlan:
-        plan_id = str(uuid.uuid4())[:8]
+        plan_id = str(uuid.uuid4())[:8] # type: ignore
         return ExecutionPlan(
             plan_id=plan_id,
             execution_order=[a.get("section_id", "Unknown") for a in amendments],
