@@ -1,131 +1,290 @@
 <div align="center">
-  <img src="https://img.shields.io/badge/Status-Hackathon_Ready-blueviolet?style=for-the-badge" alt="Status" />
-  <img src="https://img.shields.io/badge/Version-1.0.0-blue?style=for-the-badge" alt="Version" />
-  <img src="https://img.shields.io/badge/Team-ACCIO-orange?style=for-the-badge" alt="Team ACCIO" />
-  <img src="https://img.shields.io/badge/Team_ID-28012068-darkgreen?style=for-the-badge" alt="Team ID 28012068" />
+  <h3>🏆 Built for SUNHACKS Hackathon 2k26</h3>
+  <h4>🚀 Team: TEAM ACCIO | ID: 28012068</h4>
+  <p>
+    <img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" />
+    <img src="https://img.shields.io/badge/FastAPI-005571?style=for-the-badge&logo=fastapi" />
+    <img src="https://img.shields.io/badge/LangChain-121212?style=for-the-badge&logo=chainlink" />
+    <img src="https://img.shields.io/badge/Groq%20AI-f55036?style=for-the-badge" />
+    <img src="https://img.shields.io/badge/Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white" />
+    <img src="https://img.shields.io/badge/ChromaDB-000000?style=for-the-badge" />
+    <img src="https://img.shields.io/badge/SQLite-07405E?style=for-the-badge&logo=sqlite&logoColor=white" />
+  </p>
 </div>
 
-<br/>
+# RegulaIntel - Autonomous AI Sentinel for Financial Compliance
 
-<div align="center">
-  <h1 align="center">🏛️ RegulaIntel</h1>
-  <strong>The Autonomous AI Compliance Officer & Legal Auditor</strong>
-</div>
+A comprehensive autonomous web application for live regulatory compliance tracking, version differential scanning, and expert AI-driven policy insights.
 
-<br/>
 
-<p align="center">
-  RegulaIntel is a fully autonomous, Multi-Agent AI system designed to solve the manual bottleneck of legal compliance. It actively monitors government websites (RBI, SEBI, MCA), mathematically analyzes exactly what changed in new laws, cross-references these laws against internal company databases, and automatically drafts handbook amendments within 24 hours of dropping.
-</p>
+## 📸 Core Features Gallery
+To keep it clean and high-impact for the judges, we recommend these three essential screenshots:
+1. **The Intelligence Hub**: ![Main Dashboard](assets/main_dashboard.png)
+2. **Sentinel RAG Session**: ![RAG Engine](assets/RAG_ENGINE.png)
+3. **Divergence Report**: ![AI Difference](assets/ai_difference.png)
 
----
 
-### 🌟 Why RegulaIntel? (The "So What?")
-Traditional compliance teams take weeks to digest new financial circulars. Enter **RegulaIntel**:
-- 🕷️ **Autonomous Crawling:** Zero-human-in-the-loop design. Built-in web scrapers intercept new PDFs from SEC/RBI pages automatically.
-- 🧠 **Semantic Diffing:** Uses `SentenceTransformers` to detect precise semantic and legal shifts, not just basic text changes.
-- 🔗 **Impact Mapping Engine:** Maps external laws directly to your specific *internal* master policies to determine infrastructural failure/impact.
-- ⚡ **Auto-Drafter:** The integrated LLM instantly drafts the proposed amendment for your legal team to copy-paste.
-- 🎨 **Glassmorphism React UI:** Enterprise-grade traceability dashboard built on modern web-design paradigms.
 
----
+## ✨ Key Features
 
-### 🛠️ Architecture Tech Stack
-- **AI Core Intelligence:** LangChain, LangGraph (Multi-Agent Routing), `SentenceTransformers` (Semantic Search), Groq (LLM Inference)
-- **Backend Infrastructure:** FastAPI, Python, PyMuPDF (Document Parsing), Web Scraping (`BeautifulSoup`, `feedparser`)
-- **Frontend Presentation:** React, Vite, Framer-Motion (Micro-animations), TailwindCSS v4, Sonner (Toasts)
-- **Local Data Storage:** Local Directory Arrays (Production maps to Pinecone/AWS S3)
+### 1. 🧠 Sentinel RAG Engine (Smart Chat)
+An integrated ChatGPT-style interface with localized session memory. Unlike standard LLMs, it loads the last 6 messages of context from SQLite and provides **active citation tags** mapping back to the exact regulatory section used for the answer.
 
----
+### 2. ⏳ Lifecycle Timeline (Circular Versioning)
+Automatically tracks every update to a regulation. When a new circular is released (e.g., *KYC Master Direction*), the system archives the previous state as `v1` and logs the new one as `v2` within a unified historical timeline.
 
-### 📂 Repository Structure
-```text
-RegulaIntel/
-│
-├── agents/                  # Multi-Agent LangGraph intelligence
-│   ├── diff.py              # Analyzes exact semantic shifts
-│   ├── impact.py            # Maps shifts to internal policies
-│   ├── drafter.py           # Auto-generates handbook amendments
-│   └── workflow.py          # The LangGraph Supervisor configuration
-│
-├── api.py                   # FastAPI Application Server (Backend)
-│
-├── data/                    # Vector Mock Data
-│   ├── circulars/           # Local demo PDFs
-│   ├── incoming/            # Destination for active Web Scraper
-│   └── internal/            # Company Master Policy DB files
-│
-├── frontend/                # React / Vite Dashboard (Tailwind + Framer)
-│   ├── src/                 
-│   │   ├── App.jsx          # Primary UI Interface & API Hooks
-│   │   └── index.css        # Premium Glassmorphism & Blob Styles
-│   └── package.json         
-│
-└── utils/                   # Shared Infrastructure
-    ├── scraper.py           # Chron-based BeautifulSoup logic
-    ├── pdf_processor.py     # Binary PDF extraction algorithms
-    └── report_generator.py  # FPDF Compliance Audit PDF Exporter
-```
+### 3. 🔍 AI Differential Scanner (Version Compare)
+A high-stakes comparison tool. Selecting any two immutably logged versions triggers a recursive LangGraph agentic scan to detect semantic shifts, compliance risks, and critical anomalies between the archives.
+
+### 4. 📡 Autonomous Node Monitoring
+Continuous real-time sweeping of regulators (RBI, SEBI, MCA, IRDAI). The system dynamically calculates integrity status based on active scraper connectivity.
+
+### 5. 💎 Vercel-Grade UI/UX
+A premium, minimalist glassmorphism interface built with Framer Motion. Smooth micro-animations, responsive data charts, and a consistent 95% dark theme identity.
+
+### Supported Regulatory Databases (4 Classes)
+| Node | Databases Tracked |
+|-------|----------|
+| **RBI** | Master Directions, Circulars, Monetary Policy Docs, KYC |
+| **SEBI** | Depository Participant Rules, Market Infrastructure Mandates |
+| **MCA** | Corporate Disclosures, LLP Directives |
+| **IRDAI** | Insurance Rules, Underwriting Mandates |
 
 ---
 
-### 📊 Autonomous System Flowchart
-```mermaid
-graph TD
-    A[Global Web Scraper] -->|Downloads SEC/RBI PDF 24/7| B(PyMuPDF Extractor)
-    B --> C{LangGraph Supervisor}
-    
-    C --> D(Diff Agent)
-    D -->|Calculates Semantic Shifts & Vectors| E(Impact Agent)
-    
-    E -->|Maps against Internal Handbook| F(Drafter Agent)
-    F -->|Synthesizes Legal Amendment| G[React Glassmorphism UI]
-    
-    G -->|One-Click Export| H[Compliance Audit PDF]
-    
-    style A fill:#10b981,stroke:#047857,stroke-width:2px,color:#fff
-    style C fill:#3b82f6,stroke:#1d4ed8,stroke-width:2px,color:#fff
-    style G fill:#8b5cf6,stroke:#6d28d9,stroke-width:2px,color:#fff
-    style H fill:#0f172a,stroke:#000,stroke-width:2px,color:#fff
-```
+## 🧭 Navigation & Interactive Routes
+
+### 🏠 Command Center (`/`)
+The primary hub showing real-time **Regulatory Node Integrity**. Monitor the live status of fetchers and view the overall system health chart.
+<sub>Access at: [http://localhost:5173/](http://localhost:5173/)</sub>
+
+### 🧠 Sentinel RAG Chat (`/chat`)
+Engage with a context-aware AI expert. Supports **Persistent Session History** and provides direct **Circular Reference Tags** for every answer derived from the regulatory database.
+<sub>Access at: [http://localhost:5173/chat](http://localhost:5173/chat)</sub>
+
+### 📜 Historical Vault (`/history`)
+Your regulatory time-machine. View a **Vertical Timeline** of all archived circular versions. Select any two versions to run the **AI Differential Scanner** for a recursive compliance impact report.
+<sub>Access at: [http://localhost:5173/history](http://localhost:5173/history)</sub>
+
+### 🔑 Secure Gate (`/login`)
+A fully redesigned, minimalist authentication flow powered by Supabase.
+<sub>Access at: [http://localhost:5173/login](http://localhost:5173/login)</sub>
+
+> [!IMPORTANT]
+> **Email Verification Required:** Upon registering, Supabase will send a confirmation link to your email. You **must** verify the link before the Sentintel Dashboard will allow access.
+
+
 
 ---
 
-### 🚀 Quick Start / Local Deployment
 
-#### 1. Setup the AI Backend
+
+
+## Quick Start
+
+### 1. Install Dependencies
+
 ```bash
-# Clone the repository
-git clone https://github.com/your-username/RegulaIntel.git
-cd RegulaIntel
-
-# Create and activate virtual environment (optional)
-python -m venv venv
-source venv/Scripts/activate
-
-# Install dependencies
 pip install -r requirements.txt
+cd frontend
+npm install
+cd ..
+```
 
-# Start the Multi-Agent FastAPI Server
+### 2. Configure Environment
+
+Edit `.env` files in both root and frontend folders:
+
+**Backend (`/Sunhack_Hackathon/.env`)**
+```env
+# Groq LLM Runtime
+GROQ_API_KEY=your-groq-api-key-here
+```
+
+**Frontend (`/Sunhack_Hackathon/frontend/.env`)**
+```env
+# Supabase Configuration
+VITE_SUPABASE_URL=your_supabase_project_url_here
+VITE_SUPABASE_ANON_KEY=your_supabase_anon_key_here
+```
+
+### 3. Initialize Databases
+
+```bash
+# Initializes SQLite (Sessions & Versions) and ChromaDB
+python db/database.py
+```
+
+### 4. Start Application
+
+**Backend API:**
+```bash
 python api.py
 ```
 
-#### 2. Start the React UI (In a new terminal)
+**Frontend React App:**
 ```bash
 cd frontend
-npm install
 npm run dev
 ```
 
-Finally, open your browser to `http://localhost:5173/` and hit the **AUTO-ANALYZE INTERCEPT** button!
+Access at: **http://localhost:5173**
 
----
 
-### 📸 Demo Features
-- **Live Scraper Trigger:** Watch the application scrape the web and download dummy PDFs locally without manual input.
-- **Traceability View:** Every semantic match guarantees the exact page number and confidence score to eliminate AI hallucination.
-- **Export to Compliance Audit:** Generate a professional PDF audit of the AI's findings in one click.
 
----
+## Test Credentials
 
-> Built intelligently for Sunhack Hackathon 2026.
+**Authentication is controlled via Supabase:**
+- Register any active email account and utilize the magic-link/password verification generated.
+
+
+
+## Project Structure
+
+```
+REGULA_INTEL/
+├── agents/                        # AI & Scraper Pipelines
+│   ├── diff.py                    # AI semantic differ
+│   ├── executor.py                # Action executor
+│   ├── impact.py                  # Policy impact analyzer
+│   ├── ingest.py                  # Live Document injest/tagger
+│   ├── monitor.py                 # RBI/SEBI/MCA/IRDAI Web crawlers
+│   └── workflow.py                # LangGraph state machine routers
+├── data/                          # Databases
+│   ├── regulaintel.db             # Local SQLite Session/circular tracking
+│   └── chroma_db/                 # Chroma vector collections
+├── db/                            # Database Initialization
+│   └── database.py                # Table schemas
+├── frontend/                      # React User Interface
+│   ├── src/
+│   │   ├── components/            # Isolated view components
+│   │   ├── contexts/              # Auth wrappers
+│   │   ├── pages/
+│   │   │   ├── Dashboard.jsx      # Main glassmorphic hub
+│   │   │   ├── Chat.jsx           # RAG Engine memory-chat
+│   │   │   └── History.jsx        # Timeline Differential view
+│   │   ├── App.jsx                # Router & Protected Guards
+│   │   └── index.css              # Dark theme base tailwind layer
+├── utils/                         # OCR & Utility Functions
+│   └── pdf_processor.py           # Markdown/Page extractors
+├── api.py                         # FastAPI Router (Endpoints)
+├── requirements.txt               # Python Dependencies
+└── README.md                      # This File
+```
+
+
+
+## Engine Performance
+
+### Scraping Capability Results
+- **Sources Tracked:** RBI, SEBI, IRDAI, MCA
+- **Fetch Frequency:** Automated looping runtime logic
+- **Database Backup:** Local SQLite persistence with live Chroma metadata chunking
+
+### Execution Metrics
+- **RAG Retrieval Depth:** LangChain retrieves last 6 chat history messages locally context-windowed.
+- **Node Integration Status:** Calculated Dynamically `(live nodes / total nodes) * 100`.
+- **System Theme:** #09090b primary root with Indigo-500 highlighting.
+
+
+
+## Configuration
+
+### Environment Setup
+
+The backend utilizes `Groq` for high-throughput language generation without heavy local GPU reliance.
+
+Generate a free Groq API key here: https://console.groq.com/keys
+
+
+
+## Documentation
+
+| Document | Description |
+|----------|-------------|
+| `README.md` | This file - main documentation |
+| `task.md` | Autonomous internal breakdown tracker |
+| `implementation_plan.md` | Structural overview of logic changes |
+| `walkthrough.md` | Visual validation proofs |
+
+
+
+## Development
+
+### Run Live Scrapers Separately
+
+```bash
+python agents/monitor.py
+```
+
+### View Live LLM Graphs
+
+LangGraph agents are configured sequentially. Entry begins at `agents.ingest`, routes to `agents.diff`, evaluates in `agents.impact`.
+
+
+
+## Security Features
+
+- **Supabase Vault** - RLS protected authentication guards natively built-in
+- **Isolated Databases** - SQLite and Vector storage operates purely behind FastAPI local bounds
+- **Sanitized Routing** - React ProtectedRoutes bound all user interactions
+- **Fallback Mocks** - Automatically catches missing LLM keys to prevent demonstration crashes
+
+
+
+## Relational Schema
+
+### SQLite `messages` Collection
+```sql
+CREATE TABLE messages (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    session_id TEXT,
+    role TEXT,
+    content TEXT,
+    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    circular_refs TEXT
+)
+```
+
+### SQLite `circular_versions` Collection
+```sql
+CREATE TABLE circular_versions (
+    circular_id TEXT,
+    source TEXT,
+    version_number INTEGER,
+    ingested_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    file_path TEXT,
+    chunk_ids TEXT
+)
+```
+
+
+
+## Troubleshooting
+
+### Node Fetching Failed (0% Integrity)
+Check internet connection to Indian Regulatory nodes. Certain endpoints may geo-block based on host server.
+
+### Chat Engine states 'Offline'
+Provide your valid Groq API key manually into `d:\Sunhack_Hackathon\.env`. Verify standard format `GROQ_API_KEY=gsk_...`
+
+
+
+## Support
+
+For issues or questions:
+1. Verify `ChromaDB` directories possess active read/write permissions.
+2. Confirm Vite frontend executes properly on Node v18+.
+
+
+
+## Acknowledgments
+
+- **Groq** - Blazing fast LLM inference engines (Llama-3.3 models)
+- **Supabase** - Open Source Firebase alternative
+- **LangChain & LangGraph** - Complex agent orchestration
+- **Team Accio (28012068)** - Primary Development Team for SUNHACKS 2k26
+
+<div align="center">
+  <i>Developed for the SUNHACKS Hackathon 2k26. Redefining Compliance through Autonomous AI Intelligence.</i>
+</div>

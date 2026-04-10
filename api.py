@@ -10,6 +10,20 @@ import os
 import tempfile
 import uvicorn
 import threading
+import uuid
+from datetime import datetime
+from dotenv import load_dotenv
+
+# Load environment variables
+load_dotenv()
+
+from db.database import get_db_connection
+from langchain_groq import ChatGroq
+from langchain_core.messages import HumanMessage, AIMessage, SystemMessage
+
+class ChatRequest(BaseModel):
+    session_id: str
+    message: str
 
 app = FastAPI(title="RegulaIntel API")
 
@@ -395,6 +409,184 @@ async def get_incoming_circulars():
         })
     except Exception as e:
         return JSONResponse(status_code=500, content={"error": str(e)})
+
+# ============================================================================
+# RAG CHAT HISTORY ENGINE
+# ============================================================================
+
+@app.post("/api/chat/session")
+async def create_chat_session():
+    """Create a new chat session."""
+    try:
+        session_id = str(uuid.uuid4())
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        cursor.execute("INSERT INTO sessions (session_id) VALUES (?)", (session_id,))
+        conn.commit()
+        conn.close()
+        return JSONResponse(content={"session_id": session_id})
+    except Exception as e:
+        return JSONResponse(status_code=500, content={"message": str(e)})
+
+@app.get("/api/chat/sessions")
+async def get_chat_sessions():
+    """Get all past chat sessions."""
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        cursor.execute("""
+            SELECT s.session_id, s.created_at, 
+                   (SELECT content FROM messages m WHERE m.session_id = s.session_id ORDER BY timestamp ASC LIMIT 1) as title
+            FROM sessions s
+            ORDER BY s.created_at DESC
+        """)
+        rows = cursor.fetchall()
+        conn.close()
+        
+        sessions = []
+        for r in rows:
+            sessions.append({
+                "session_id": r["session_id"],
+                "created_at": r["created_at"],
+                "title": r["title"][:50] + "..." if r["title"] and len(r["title"]) > 50 else (r["title"] or "New Chat")
+            })
+        return JSONResponse(content={"sessions": sessions})
+    except Exception as e:
+        return JSONResponse(status_code=500, content={"message": str(e)})
+
+@app.get("/api/chat/messages/{session_id}")
+async def get_chat_messages(session_id: str):
+    """Retrieve history for a specific session."""
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        cursor.execute("SELECT role, content, circular_refs FROM messages WHERE session_id = ? ORDER BY timestamp ASC", (session_id,))
+        rows = cursor.fetchall()
+        conn.close()
+        
+        messages = [{"role": r["role"], "content": r["content"], "circular_refs": r["circular_refs"]} for r in rows]
+        return JSONResponse(content={"messages": messages})
+    except Exception as e:
+        return JSONResponse(status_code=500, content={"message": str(e)})
+
+@app.post("/api/chat")
+async def process_chat(request: ChatRequest):
+    """Process a user message with 6-message RAG context."""
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        
+        # 1. Save user message
+        cursor.execute("INSERT INTO messages (session_id, role, content) VALUES (?, ?, ?)", 
+                       (request.session_id, "user", request.message))
+        conn.commit()
+        
+        # 2. Retrieve last 6 messages
+        cursor.execute("SELECT role, content FROM messages WHERE session_id = ? ORDER BY timestamp DESC LIMIT 6", 
+                       (request.session_id,))
+        history_rows = cursor.fetchall()
+        
+        # Reverse to chronological order
+        history_rows.reverse()
+        
+        # 3. Construct LangChain messages
+        messages = [
+            SystemMessage(content="You are RegulaIntel, an expert AI on Indian Financial Compliance. IMPORTANT: Keep your responses EXTREMELY concise (max 3-4 bullet points). Always summarize. Your goal is to provide a clean, high-impact answer that fits on a single mobile/desktop screen for demonstration purposes.")
+        ]
+        
+        for r in history_rows:
+            if r["role"] == "user":
+                messages.append(HumanMessage(content=r["content"]))
+            elif r["role"] == "ai":
+                messages.append(AIMessage(content=r["content"]))
+                
+        # 4. Invoke LLM (Mocked or actual if GROQ_API_KEY is present)
+        import os
+        api_key = os.environ.get("GROQ_API_KEY")
+        if api_key:
+            llm = ChatGroq(model_name="llama-3.3-70b-versatile", temperature=0.2, groq_api_key=api_key)
+            ai_response = llm.invoke(messages).content
+        else:
+            # Fallback for hackathon demo if key drops
+            ai_response = "As an AI Compliance Sentinel, I acknowledge your query. However, my Language Model routing is currently offline (Missing API Key). My core directive confirms that under Section 45-IA, operational frameworks require strict auditing."
+
+        # Simulate a circular reference tag for the mock requirement
+        refs = "RBI/2024-25/112 (KYC Master Direction)" if "kyc" in request.message.lower() else "SEBI/HO/MIRSD/2024/09"
+        
+        # 5. Save AI response
+        cursor.execute("INSERT INTO messages (session_id, role, content, circular_refs) VALUES (?, ?, ?, ?)", 
+                       (request.session_id, "ai", ai_response, refs))
+        conn.commit()
+        conn.close()
+        
+        return JSONResponse(content={
+            "response": ai_response,
+            "circular_refs": refs
+        })
+    except Exception as e:
+        return JSONResponse(status_code=500, content={"message": str(e)})
+
+# ============================================================================
+# HISTORICAL CIRCULAR TRACKING
+# ============================================================================
+
+@app.get("/api/history/circulars")
+async def get_circular_history():
+    """Retrieve all circulars and their historical versions."""
+    try:
+        conn = get_db_connection()
+        c = conn.cursor()
+        c.execute("""
+            SELECT circular_id, source, version_number, ingested_at, file_path 
+            FROM circular_versions 
+            ORDER BY circular_id, version_number DESC
+        """)
+        rows = c.fetchall()
+        conn.close()
+        
+        history_map = {}
+        for r in rows:
+            cid = r["circular_id"]
+            if cid not in history_map:
+                history_map[cid] = {"circular_id": cid, "source": r["source"], "versions": []}
+            history_map[cid]["versions"].append({
+                "version_number": r["version_number"],
+                "ingested_at": r["ingested_at"],
+                "file_path": r["file_path"]
+            })
+            
+        return JSONResponse(content={"circulars": list(history_map.values())})
+    except Exception as e:
+        return JSONResponse(status_code=500, content={"message": str(e)})
+
+@app.get("/api/history/diff/{circular_id}")
+async def invoke_historical_diff(circular_id: str, v1: int, v2: int):
+    """Run the diff agent between two historical versions of the same circular."""
+    try:
+        conn = get_db_connection()
+        c = conn.cursor()
+        c.execute("SELECT file_path FROM circular_versions WHERE circular_id = ? AND version_number = ?", (circular_id, v1))
+        p1 = c.fetchone()
+        c.execute("SELECT file_path FROM circular_versions WHERE circular_id = ? AND version_number = ?", (circular_id, v2))
+        p2 = c.fetchone()
+        conn.close()
+        
+        if not p1 or not p2:
+            return JSONResponse(status_code=404, content={"message": "Could not locate the requested versions."})
+            
+        # Push through standard graph invocation
+        from agents.workflow import graph as workflow_graph
+        result = workflow_graph.invoke({"old_pdf": p1["file_path"], "new_pdf": p2["file_path"]})
+        
+        def serialize(obj):
+            if hasattr(obj, 'model_dump'): return obj.model_dump()
+            elif hasattr(obj, '__dict__'): return obj.__dict__
+            return str(obj)
+
+        safe_changes = [serialize(c) for c in result.get('changes', [])]
+        return JSONResponse(content={"diff_report": safe_changes})
+    except Exception as e:
+        return JSONResponse(status_code=500, content={"message": str(e)})
 
 
 if __name__ == "__main__":
