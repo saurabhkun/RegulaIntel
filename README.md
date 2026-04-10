@@ -47,7 +47,6 @@ RegulaIntel/
 │   └── workflow.py          # The LangGraph Supervisor configuration
 │
 ├── api.py                   # FastAPI Application Server (Backend)
-├── app.py                   # Legacy Streamlit UI (Fallback)
 │
 ├── data/                    # Vector Mock Data
 │   ├── circulars/           # Local demo PDFs

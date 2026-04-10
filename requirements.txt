@@ -2,14 +2,12 @@ langchain-groq
 langgraph
 chromadb
 neo4j
-streamlit
 pymupdf4llm
 sentence-transformers
 rank-bm25
 pydantic
 fpdf2
 python-docx
-streamlit-agraph
 langchain-core
 langchain-community
 groq
