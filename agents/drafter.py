@@ -11,7 +11,7 @@ class ListAmendment(BaseModel):
 
 @tool
 def draft_amendments(impacts: list, changes: list) -> List[Amendment]:
-    """Generate structured amendment drafts with citations."""
+    """Generate structured amendment drafts with citations, department info, and implementation guidance."""
     # Lazy-load: always re-read the API key at call time (not import time)
     load_dotenv(override=True)
     api_key = os.getenv("GROQ_API_KEY", "")
@@ -25,7 +25,10 @@ def draft_amendments(impacts: list, changes: list) -> List[Amendment]:
         print(f"Drafter: Failed to initialize LLM: {e}")
         return []
     
-    impacts_str = "\n".join([f"Policy: {i.policy_name}, Section: {i.section_id}, Text: {i.matched_text}" for i in impacts[:3]])
+    impacts_str = "\n".join([
+        f"Policy: {i.policy_name}, Section: {i.section_id}, Text: {i.matched_text}, Department: {getattr(i, 'department', 'N/A')}, Systems: {getattr(i, 'system_impact', [])}"
+        for i in impacts[:3]
+    ])
     
     # Handle dict/model formats
     def safe_get(c, key, default=''):
@@ -35,11 +38,26 @@ def draft_amendments(impacts: list, changes: list) -> List[Amendment]:
 
     prompt = f"""
     You are a Senior Regulatory Compliance Analyst. Draft the necessary amendments to internal policies.
+    
+    For each amendment, provide:
+    1. Clear proposed text
+    2. Implementation difficulty (LOW/MEDIUM/HIGH/CRITICAL)
+    3. Which systems need updates
+    4. Testing recommendations
+    5. Affected roles/departments
+    
     IMPACTED POLICIES:
     {impacts_str}
     
     REGULATORY CHANGES:
     {changes_str}
+    
+    Generate amendments in structured JSON format with each amendment including:
+    - policy_name, section_id, current_text, proposed_text, justification, source_citation
+    - department (responsible department)
+    - implementation_effort (LOW/MEDIUM/HIGH/CRITICAL)
+    - affected_systems (list of system names)
+    - testing_required (boolean)
     """
     
     try:
@@ -47,6 +65,15 @@ def draft_amendments(impacts: list, changes: list) -> List[Amendment]:
         result = chain.invoke(prompt)
         for a in result.amendments:
             a.source_citation = "Mapped from change sections"
+            # Set additional fields for execution
+            if not hasattr(a, 'department'):
+                a.department = "Legal & Compliance"
+            if not hasattr(a, 'implementation_effort'):
+                a.implementation_effort = "MEDIUM"
+            if not hasattr(a, 'affected_systems'):
+                a.affected_systems = []
+            if not hasattr(a, 'testing_required'):
+                a.testing_required = True
         print(f"Drafter: Successfully drafted {len(result.amendments)} amendments.")
         return result.amendments
     except Exception as e:

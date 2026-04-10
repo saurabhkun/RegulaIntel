@@ -1,62 +1,107 @@
-[
-  {
-    "policy_name": "KYC Policy",
-    "version": "1.0",
-    "sections": [
-      {
-        "id": "1.1",
-        "text": "KYC documents must be verified within 3 business days of customer onboarding. Acceptable documents: Aadhaar, PAN, Passport.",
-        "last_updated": "2023-01-01"
-      },
-      {
-        "id": "1.2",
-        "text": "Ongoing monitoring required for high-risk customers as per RBI guidelines. PEPs require enhanced due diligence.",
-        "last_updated": "2023-01-01"
-      }
-    ]
-  },
-  {
-    "policy_name": "AML Policy",
-    "version": "1.0",
-    "sections": [
-      {
-        "id": "2.1",
-        "text": "Suspicious Transaction Reports (STR) must be filed within 7 days to FIU-IND.",
-        "last_updated": "2023-06-15"
-      }
-    ]
-  },
-  {
-    "policy_name": "Data Privacy Policy",
-    "version": "1.0",
-    "sections": [
-      {
-        "id": "3.1",
-        "text": "Customer data retention as per DPDP Act 2023: max 7 years for transaction records.",
-        "last_updated": "2024-01-01"
-      }
-    ]
-  },
-  {
-    "policy_name": "Loan Policy",
-    "version": "1.0",
-    "sections": [
-      {
-        "id": "4.1",
-        "text": "Retail loans up to ₹50 lakh require income proof and CIBIL score >700.",
-        "last_updated": "2023-12-01"
-      }
-    ]
-  },
-  {
-    "policy_name": "Investment Policy",
-    "version": "1.0",
-    "sections": [
-      {
-        "id": "5.1",
-        "text": "Mutual fund investments limited to 25% of portfolio per scheme.",
-        "last_updated": "2023-03-01"
-      }
-    ]
-  }
-]
+{
+  "company": "Example Bank of India",
+  "last_updated": "2025-01-15",
+  "policies": [
+    {
+      "policy_id": "POL-KYC-001",
+      "policy_name": "KYC Master Policy",
+      "version": "2.3",
+      "effective_date": "2024-06-01",
+      "owner": "Chief Compliance Officer",
+      "sections": [
+        {
+          "section_id": "4.2",
+          "section_title": "Customer Risk Classification",
+          "text": "As per RBI Master Direction on KYC 2024 Section 4.2, any customer with annual income exceeding ₹10,00,000 shall be categorized as 'Low Risk'. Such customers are eligible for expedited onboarding and simplified due diligence. Customers with income between ₹5,00,000 and ₹10,00,000 are 'Medium Risk'. All others are 'High Risk'.",
+          "regulatory_refs": [
+            "RBI Master Direction on KYC 2024 Section 4.2",
+            "RBI/2023-24/85"
+          ]
+        },
+        {
+          "section_id": "4.5",
+          "section_title": "Ongoing Due Diligence",
+          "text": "Low Risk customers require KYC refresh every 5 years. Medium Risk every 3 years. High Risk every 1 year. As per RBI guidelines, any trigger event (large transaction, address change) mandates immediate re-KYC.",
+          "regulatory_refs": [
+            "RBI Master Direction on KYC 2024 Section 4.5"
+          ]
+        }
+      ]
+    },
+    {
+      "policy_id": "POL-LOAN-008",
+      "policy_name": "Loan Approval Policy",
+      "version": "1.8",
+      "effective_date": "2024-11-15",
+      "owner": "Head of Credit Risk",
+      "sections": [
+        {
+          "section_id": "3.1",
+          "section_title": "Due Diligence Requirements",
+          "text": "In compliance with RBI circular RBI/2023-24/85, all loan applications above ₹50,00,000 require enhanced due diligence including physical verification of residence and business premises. Applications above ₹1,00,00,000 additionally require a site visit report from an empanelled valuer.",
+          "regulatory_refs": [
+            "RBI/2023-24/85"
+          ]
+        },
+        {
+          "section_id": "3.4",
+          "section_title": "Risk‑Based Pricing",
+          "text": "Interest rates are determined based on customer risk score. Low Risk customers (as per KYC Policy Section 4.2) receive a 0.5% discount on the applicable card rate.",
+          "regulatory_refs": []
+        }
+      ]
+    },
+    {
+      "policy_id": "POL-DATA-012",
+      "policy_name": "Data Retention Policy",
+      "version": "2.0",
+      "effective_date": "2023-09-01",
+      "owner": "Data Protection Officer",
+      "sections": [
+        {
+          "section_id": "5.0",
+          "section_title": "Record Keeping",
+          "text": "As mandated by RBI guidelines, all KYC records must be preserved for a minimum of 10 years from the date of account closure. Transaction records must be retained for 10 years. Loan documents for 12 years after repayment. CCTV footage for 90 days.",
+          "regulatory_refs": [
+            "RBI Master Direction on KYC 2024 Section 5.0",
+            "RBI/2022-23/112"
+          ]
+        }
+      ]
+    },
+    {
+      "policy_id": "POL-FRAUD-005",
+      "policy_name": "Fraud Monitoring Policy",
+      "version": "3.1",
+      "effective_date": "2025-01-01",
+      "owner": "Chief Risk Officer",
+      "sections": [
+        {
+          "section_id": "2.3",
+          "section_title": "Early Warning Signals",
+          "text": "The system shall flag any transaction exceeding ₹10,00,000 in a newly opened account (less than 30 days old) for manual review. This threshold aligns with RBI circular RBI/2024-25/42 on mule account prevention.",
+          "regulatory_refs": [
+            "RBI/2024-25/42"
+          ]
+        }
+      ]
+    },
+    {
+      "policy_id": "POL-PRIV-003",
+      "policy_name": "Customer Privacy & Grievance Redressal Policy",
+      "version": "2.5",
+      "effective_date": "2024-04-01",
+      "owner": "Data Protection Officer",
+      "sections": [
+        {
+          "section_id": "6.1",
+          "section_title": "Data Subject Rights",
+          "text": "Customers have the right to access their personal data within 30 days of request, as per RBI guidelines on digital lending and data protection. A nominal fee of ₹100 may be charged for physical copies.",
+          "regulatory_refs": [
+            "RBI/2023-24/99"
+          ]
+        }
+      ]
+    }
+  ]
+}

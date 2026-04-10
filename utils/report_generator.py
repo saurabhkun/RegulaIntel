@@ -161,8 +161,21 @@ class ReportGenerator:
                 prop   = getattr(a, 'proposed_text', '')
                 just   = getattr(a, 'justification', '')
                 cite   = getattr(a, 'source_citation', '')
+                dept   = getattr(a, 'department', 'Unknown')
+                effort = getattr(a, 'implementation_effort', 'MEDIUM')
+                systems = getattr(a, 'affected_systems', [])
+                testing = getattr(a, 'testing_required', True)
 
                 self._subheading(f"Amendment {i+1}: {p_name} — Section {s_id}")
+
+                # Implementation Metadata
+                self.pdf.set_font("Helvetica", "", 9)
+                self.pdf.set_text_color(60, 80, 150)
+                self.pdf.cell(0, 5, f"Department: {dept}  |  Implementation: {effort}  |  Testing: {'Yes' if testing else 'No'}", ln=True)
+                if systems:
+                    self.pdf.cell(0, 5, f"Affected Systems: {', '.join(systems)}", ln=True)
+                self.pdf.set_text_color(0, 0, 0)
+                self.pdf.ln(2)
 
                 if curr:
                     self.pdf.set_font("Helvetica", "I", 9)
@@ -185,6 +198,43 @@ class ReportGenerator:
                     self.pdf.cell(0, 5, f"Source: {_s(cite, 200)}", ln=True)
                 self.pdf.ln(4)
                 self._divider()
+
+        # ── Impact Mapping Summary ────────────────────────────────────────────
+        self._heading("Section 3: Impact Mapping & Execution Summary")
+        self._divider()
+        
+        # Department impact summary
+        departments = set()
+        systems_set = set()
+        for a in amendments:
+            dept = getattr(a, 'department', 'Unknown')
+            departments.add(dept)
+            for sys in getattr(a, 'affected_systems', []):
+                systems_set.add(sys)
+        
+        summary_text = (
+            f"This compliance update affects {len(departments)} departments and {len(systems_set)} systems. "
+            f"{len([a for a in amendments if getattr(a, 'testing_required', True)])} amendments require QA testing. "
+            f"Estimated implementation time: {len(amendments) * 5} minutes for automated execution."
+        )
+        self._body(summary_text)
+        self.pdf.ln(2)
+        
+        if departments:
+            self.pdf.set_font("Helvetica", "B", 10)
+            self.pdf.cell(0, 6, "Departments Affected:", ln=True)
+            self.pdf.set_font("Helvetica", "", 9)
+            self.pdf.multi_cell(0, 5, ", ".join(sorted(departments)))
+            self.pdf.ln(2)
+        
+        if systems_set:
+            self.pdf.set_font("Helvetica", "B", 10)
+            self.pdf.cell(0, 6, "Systems Requiring Updates:", ln=True)
+            self.pdf.set_font("Helvetica", "", 9)
+            for sys in sorted(systems_set):
+                self.pdf.cell(10, 5, "•", ln=False)
+                self.pdf.cell(0, 5, sys, ln=True)
+            self.pdf.ln(2)
 
         # ── Footer ────────────────────────────────────────────────────────────
         self.pdf.set_y(-20)
