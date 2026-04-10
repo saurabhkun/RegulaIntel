@@ -1,0 +1,8 @@
+1. Customer Onboarding Rules (Section 4.2)
+As per RBI Circular Section 4.2, all new customer accounts must have mandatory multi-factor authentication (MFA) enabled. Physical documents must be verified within 7 days.
+
+2. Risk Management Protocol (Section 5.1)
+Risk assessments are required bi-annually. Financial audits must be attached to the risk reviews.
+
+3. Monitoring Framework (Section 7.3)
+All high-value transactions above limits require an automatic hold and review.

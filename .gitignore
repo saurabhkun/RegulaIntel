@@ -1,0 +1,34 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.env
+venv/
+env/
+.venv/
+auth.json
+
+# Local Data Drops (Do not commit PII or Hackathon PDFs)
+data/circulars/*
+!data/circulars/.gitkeep
+data/incoming/*
+!data/incoming/.gitkeep
+data/last_checked.json
+compliance*.pdf
+
+# Web & Node
+node_modules/
+dist/
+build/
+.npm
+frontend/dist/
+frontend/node_modules/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Vector DB
+.chroma/
+chroma.sqlite3

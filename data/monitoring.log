@@ -1,0 +1,32 @@
+[2026-04-10 11:14:08] 🎬 Running DEMO workflow
+[2026-04-10 11:14:08] Processing: data/incoming/demo_new.pdf
+[2026-04-10 11:14:27] 🚀 Starting Live Regulatory Monitoring
+[2026-04-10 11:14:27] Monitoring: RBI, SEBI, MCA
+[2026-04-10 11:14:27] Check interval: 3600s
+[2026-04-10 11:14:27] 🔄 Checking for new circulars...
+[2026-04-10 11:14:27] ❌ Critical error: 'StructuredTool' object is not callable
+[2026-04-10 11:14:44] ✅ Processed demo_new.pdf | Impacts: 4 | Amendments: 2
+[2026-04-10 11:15:20] 🚀 Starting Live Regulatory Monitoring
+[2026-04-10 11:15:20] Monitoring: RBI, SEBI, MCA
+[2026-04-10 11:15:20] Check interval: 3600s
+[2026-04-10 11:15:20] 🔄 Checking for new circulars...
+[2026-04-10 11:15:20] ❌ Critical error: 'StructuredTool' object is not callable
+[2026-04-10 11:18:36] 🚀 Starting Live Regulatory Monitoring
+[2026-04-10 11:18:36] Monitoring: RBI, SEBI, MCA
+[2026-04-10 11:18:36] Check interval: 3600s
+[2026-04-10 11:18:36] 🔄 Checking for new circulars...
+[2026-04-10 11:18:36] Fetching live circulars from RBI, SEBI, and MCA...
+[2026-04-10 11:18:45] Error fetching SEBI circulars: 400 Client Error: 400 for url: https://www.sebi.gov.in/sebiweb/other/OtherMainAction.do?doRecognised=yes&intmnuid=13
+[2026-04-10 11:18:46] Error fetching MCA notices: 403 Client Error: Forbidden for url: https://www.mca.gov.in/content/dam/mca/notification/
+[2026-04-10 11:18:46] Found 0 circulars to process
+[2026-04-10 11:18:46] Downloaded 0 PDFs
+[2026-04-10 11:18:46] No new circulars found
+[2026-04-10 11:18:46] ⏳ Next check in 3600s...
+[2026-04-10 12:18:46] 🔄 Checking for new circulars...
+[2026-04-10 12:18:46] Fetching live circulars from RBI, SEBI, and MCA...
+[2026-04-10 12:18:49] Error fetching SEBI circulars: 400 Client Error: 400 for url: https://www.sebi.gov.in/sebiweb/other/OtherMainAction.do?doRecognised=yes&intmnuid=13
+[2026-04-10 12:18:50] Error fetching MCA notices: 403 Client Error: Forbidden for url: https://www.mca.gov.in/content/dam/mca/notification/
+[2026-04-10 12:18:50] Found 0 circulars to process
+[2026-04-10 12:18:50] Downloaded 0 PDFs
+[2026-04-10 12:18:50] No new circulars found
+[2026-04-10 12:18:50] ⏳ Next check in 3600s...

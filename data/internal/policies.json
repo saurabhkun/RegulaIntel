@@ -1,0 +1,62 @@
+[
+  {
+    "policy_name": "KYC Policy",
+    "version": "1.0",
+    "sections": [
+      {
+        "id": "1.1",
+        "text": "KYC documents must be verified within 3 business days of customer onboarding. Acceptable documents: Aadhaar, PAN, Passport.",
+        "last_updated": "2023-01-01"
+      },
+      {
+        "id": "1.2",
+        "text": "Ongoing monitoring required for high-risk customers as per RBI guidelines. PEPs require enhanced due diligence.",
+        "last_updated": "2023-01-01"
+      }
+    ]
+  },
+  {
+    "policy_name": "AML Policy",
+    "version": "1.0",
+    "sections": [
+      {
+        "id": "2.1",
+        "text": "Suspicious Transaction Reports (STR) must be filed within 7 days to FIU-IND.",
+        "last_updated": "2023-06-15"
+      }
+    ]
+  },
+  {
+    "policy_name": "Data Privacy Policy",
+    "version": "1.0",
+    "sections": [
+      {
+        "id": "3.1",
+        "text": "Customer data retention as per DPDP Act 2023: max 7 years for transaction records.",
+        "last_updated": "2024-01-01"
+      }
+    ]
+  },
+  {
+    "policy_name": "Loan Policy",
+    "version": "1.0",
+    "sections": [
+      {
+        "id": "4.1",
+        "text": "Retail loans up to ₹50 lakh require income proof and CIBIL score >700.",
+        "last_updated": "2023-12-01"
+      }
+    ]
+  },
+  {
+    "policy_name": "Investment Policy",
+    "version": "1.0",
+    "sections": [
+      {
+        "id": "5.1",
+        "text": "Mutual fund investments limited to 25% of portfolio per scheme.",
+        "last_updated": "2023-03-01"
+      }
+    ]
+  }
+]

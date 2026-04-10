@@ -1,0 +1,92 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
+@import "tailwindcss";
+
+html, body, #root {
+  font-family: 'Outfit', sans-serif;
+  background-color: #f8fafc;
+  color: #0f172a;
+  height: 100vh;
+  margin: 0;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Floating LED Orbs for Premium Background */
+body::before {
+  content: "";
+  position: absolute;
+  top: -10%; left: -5%;
+  width: 50vw; height: 50vw;
+  background: radial-gradient(circle, rgba(96,165,250,0.15) 0%, rgba(255,255,255,0) 70%);
+  filter: blur(80px); z-index: -1;
+  animation: float1 15s ease-in-out infinite alternate;
+}
+body::after {
+  content: "";
+  position: absolute;
+  bottom: -15%; right: -5%;
+  width: 55vw; height: 55vw;
+  background: radial-gradient(circle, rgba(167,139,250,0.12) 0%, rgba(255,255,255,0) 70%);
+  filter: blur(100px); z-index: -1;
+  animation: float2 20s ease-in-out infinite alternate;
+}
+
+@keyframes float1 { 0% { transform: translate(0, 0) scale(1); } 100% { transform: translate(5%, 10%) scale(1.1); } }
+@keyframes float2 { 0% { transform: translate(0, 0) scale(1); } 100% { transform: translate(-10%, -5%) scale(1.2); } }
+
+/* Premium Glassmorphic Panels */
+.panel {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 0 10px 40px -10px rgba(0,0,0,0.03), inset 0 1px 0 rgba(255,255,255,0.8);
+  border-radius: 16px;
+  overflow: hidden;
+  display: flex; flex-direction: column;
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  border-radius: 12px;
+}
+
+.section-label {
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: #64748b;
+  margin-bottom: 0.75rem;
+}
+
+/* Smooth Badges */
+.badge {
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 0.25rem 0.6rem; border-radius: 9999px;
+  font-size: 0.65rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase;
+  backdrop-filter: blur(4px);
+}
+.badge-critical { background: rgba(254, 226, 226, 0.8); color: #b91c1c; border: 1px solid rgba(252, 165, 165, 0.5); }
+.badge-moderate { background: rgba(254, 243, 199, 0.8); color: #b45309; border: 1px solid rgba(253, 230, 138, 0.5); }
+.badge-low { background: rgba(236, 253, 245, 0.8); color: #047857; border: 1px solid rgba(167, 243, 208, 0.5); }
+
+.live-dot {
+  width: 8px; height: 8px; background-color: #10b981; border-radius: 50%; margin-right: 6px;
+  box-shadow: 0 0 12px rgba(16,185,129,0.6);
+  animation: pulse-green 2.5s infinite;
+}
+.off-dot {
+  width: 8px; height: 8px; background-color: #cbd5e1; border-radius: 50%; margin-right: 6px;
+}
+@keyframes pulse-green {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+  70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+}
+
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
