@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SENTINEL COMMAND | RegulaIntel Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-background": "#dce2f8",
+                        "surface-container-highest": "#2e3445",
+                        "on-primary-container": "#006a71",
+                        "inverse-on-surface": "#2a3041",
+                        "tertiary-fixed-dim": "#e8c423",
+                        "surface-container": "#191f2f",
+                        "primary-container": "#00f2ff",
+                        "on-surface": "#dce2f8",
+                        "surface-container-lowest": "#070e1d",
+                        "surface": "#0c1322",
+                        "tertiary-fixed": "#ffe173",
+                        "on-tertiary-fixed": "#221b00",
+                        "on-surface-variant": "#b9cacb",
+                        "primary-fixed-dim": "#00dbe7",
+                        "surface-container-low": "#151b2b",
+                        "on-secondary-fixed": "#002110",
+                        "on-primary-fixed": "#002022",
+                        "error": "#ffb4ab",
+                        "primary": "#e1fdff",
+                        "secondary-container": "#16ff9e",
+                        "on-tertiary-container": "#725e00",
+                        "tertiary-container": "#fed83a",
+                        "secondary": "#f5fff4",
+                        "inverse-surface": "#dce2f8",
+                        "secondary-fixed-dim": "#00e38b",
+                        "on-secondary": "#00391f",
+                        "surface-container-high": "#232a3a",
+                        "on-error": "#690005",
+                        "inverse-primary": "#00696f",
+                        "background": "#0c1322",
+                        "surface-tint": "#00dbe7",
+                        "on-secondary-fixed-variant": "#00522f",
+                        "surface-dim": "#0c1322",
+                        "on-primary-fixed-variant": "#004f54",
+                        "error-container": "#93000a",
+                        "on-primary": "#00363a",
+                        "tertiary": "#fff6e4",
+                        "on-tertiary": "#3b2f00",
+                        "on-error-container": "#ffdad6",
+                        "surface-bright": "#32394a",
+                        "on-secondary-container": "#007243",
+                        "outline-variant": "#3a494b",
+                        "secondary-fixed": "#56ffa8",
+                        "on-tertiary-fixed-variant": "#554500",
+                        "primary-fixed": "#74f5ff",
+                        "surface-variant": "#2e3445",
+                        "outline": "#849495"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "fontFamily": {
+                        "headline": ["Space Grotesk"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            background-color: #070e1d;
+            background-image: 
+                radial-gradient(circle at 50% 50%, rgba(0, 242, 255, 0.03) 0%, transparent 80%),
+                linear-gradient(rgba(0, 242, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 242, 255, 0.05) 1px, transparent 1px);
+            background-size: 100% 100%, 40px 40px, 40px 40px;
+            font-family: 'Inter', sans-serif;
+        }
+        .glass-panel {
+            background: rgba(25, 31, 47, 0.4);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(0, 242, 255, 0.1);
+        }
+        .radar-scan {
+            background: conic-gradient(from 0deg at 50% 50%, transparent 0deg, rgba(0, 242, 255, 0.15) 60deg, transparent 65deg);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glow-cyan { text-shadow: 0 0 10px rgba(0, 242, 255, 0.5); }
+    </style>
+</head>
+<body class="text-on-background min-h-screen">
+<!-- Side Navigation -->
+<aside class="h-screen w-64 fixed left-0 top-0 border-r border-cyan-500/10 bg-slate-950/60 backdrop-blur-2xl flex flex-col h-full py-8 z-50">
+<div class="px-6 mb-12">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 bg-cyan-500/20 rounded flex items-center justify-center border border-cyan-500/30">
+<span class="material-symbols-outlined text-cyan-400 text-lg">terminal</span>
+</div>
+<div>
+<h1 class="text-cyan-400 font-black font-headline tracking-widest text-lg">SENTINEL</h1>
+<p class="font-['Space_Grotesk'] uppercase tracking-widest text-[10px] text-slate-500">V.2.0 ACTIVE</p>
+</div>
+</div>
+</div>
+<nav class="flex-1 space-y-1">
+<div class="bg-cyan-500/10 text-cyan-400 border-r-2 border-cyan-400 shadow-[0_0_15px_rgba(0,242,255,0.2)] px-6 py-4 flex items-center gap-4 cursor-pointer animate-pulse-subtle transition-all duration-300">
+<span class="material-symbols-outlined" data-icon="hub">hub</span>
+<span class="font-['Space_Grotesk'] uppercase tracking-widest text-[10px]">Intelligence Hub</span>
+</div>
+<div class="text-slate-500 hover:text-slate-300 hover:bg-white/5 px-6 py-4 flex items-center gap-4 cursor-pointer transition-all duration-300">
+<span class="material-symbols-outlined" data-icon="grid_view">grid_view</span>
+<span class="font-['Space_Grotesk'] uppercase tracking-widest text-[10px]">Risk Matrix</span>
+</div>
+<div class="text-slate-500 hover:text-slate-300 hover:bg-white/5 px-6 py-4 flex items-center gap-4 cursor-pointer transition-all duration-300">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+<span class="font-['Space_Grotesk'] uppercase tracking-widest text-[10px]">Source Monitor</span>
+</div>
+<div class="text-slate-500 hover:text-slate-300 hover:bg-white/5 px-6 py-4 flex items-center gap-4 cursor-pointer transition-all duration-300">
+<span class="material-symbols-outlined" data-icon="history_edu">history_edu</span>
+<span class="font-['Space_Grotesk'] uppercase tracking-widest text-[10px]">Audit Trails</span>
+</div>
+</nav>
+<div class="mt-auto px-6 space-y-4">
+<button class="w-full bg-cyan-500 text-on-primary py-3 rounded font-headline font-bold text-xs tracking-tighter uppercase shadow-[0_0_20px_rgba(0,242,255,0.3)] hover:scale-105 active:scale-95 transition-all">
+                New Analysis
+            </button>
+<div class="pt-6 border-t border-cyan-500/10">
+<div class="flex items-center gap-4 text-slate-500 hover:text-cyan-400 cursor-pointer py-2">
+<span class="material-symbols-outlined text-sm" data-icon="settings">settings</span>
+<span class="text-[10px] uppercase tracking-widest font-headline">Settings</span>
+</div>
+<div class="flex items-center gap-4 text-slate-500 hover:text-cyan-400 cursor-pointer py-2">
+<span class="material-symbols-outlined text-sm" data-icon="contact_support">contact_support</span>
+<span class="text-[10px] uppercase tracking-widest font-headline">Support</span>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Wrapper -->
+<main class="pl-64 min-h-screen flex flex-col">
+<!-- Top Bar -->
+<header class="w-full top-0 sticky z-40 bg-slate-950/40 backdrop-blur-xl border-b border-cyan-500/10 shadow-[0_4px_20px_rgba(0,242,255,0.05)] flex justify-between items-center px-8 py-4">
+<div class="flex items-center gap-8">
+<h2 class="text-2xl font-bold tracking-tighter text-cyan-400 drop-shadow-[0_0_8px_rgba(0,242,255,0.5)] font-headline">SENTINEL COMMAND</h2>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 text-sm">search</span>
+<input class="bg-surface-container-lowest border-none border-b border-cyan-500/20 text-xs font-headline tracking-widest focus:ring-0 focus:border-cyan-400 w-64 pl-10 text-cyan-100 uppercase" placeholder="QUERY SYSTEM DATA..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex gap-4">
+<button class="px-4 py-2 bg-cyan-500/10 text-cyan-400 border border-cyan-500/30 font-headline text-[10px] uppercase tracking-widest hover:bg-cyan-500/20 transition-all active:scale-95">
+                        Scrape Sources
+                    </button>
+<button class="px-4 py-2 bg-surface-container-high text-on-surface border border-outline-variant/30 font-headline text-[10px] uppercase tracking-widest hover:bg-surface-bright transition-all active:scale-95">
+                        Generate PDF
+                    </button>
+</div>
+<div class="flex items-center gap-3 border-l border-cyan-500/10 pl-6">
+<div class="text-right">
+<p class="text-[10px] font-headline text-cyan-400 font-bold uppercase">C.O. ADRIAN VANCE</p>
+<p class="text-[9px] text-slate-500 tracking-widest">CHIEF COMPLIANCE</p>
+</div>
+<img class="w-10 h-10 rounded-full border border-cyan-500/40 object-cover" data-alt="Professional portrait of a serious senior compliance officer in a dark corporate setting with cool blue accent lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCtqLQI1mrXj8Zho-gJYr73kCXIRL6W2uMD9Ta-ezQKW0m-DUlDLXMJyf1i4CA404SciQrmWWd7t46waspXJXFuEmkqTDlCrWOg59RCfLzPxCm4A9jVGcokU0cfMu0phooMbPSAP2eHibASLN8lSu3r5tXN42DXy6y8c7pjwntiQTGTj-KalsXgTCpLtDTrSg08c3FAGFb8OJO3Vs2jx9TspAmSRaMTP_C-_pp7ngFr4bKDyenpXU-ixqadCOOlzVphhRzwt6EBOQib"/>
+</div>
+</div>
+</header>
+<!-- Dashboard Content -->
+<div class="p-8 grid grid-cols-12 gap-8 flex-1">
+<!-- Column 1: Sources & Radar -->
+<div class="col-span-3 space-y-8">
+<section class="glass-panel p-6 rounded-xl relative overflow-hidden">
+<h3 class="font-headline font-bold text-xs tracking-widest text-cyan-400 uppercase mb-6 flex items-center gap-2">
+<span class="w-2 h-2 bg-cyan-400 rounded-full animate-pulse"></span>
+                        Active Intelligence Radar
+                    </h3>
+<div class="relative w-full aspect-square flex items-center justify-center">
+<!-- Radar Visualization -->
+<div class="absolute inset-0 border-[0.5px] border-cyan-500/20 rounded-full"></div>
+<div class="absolute inset-[25%] border-[0.5px] border-cyan-500/20 rounded-full"></div>
+<div class="absolute inset-[50%] border-[0.5px] border-cyan-500/20 rounded-full"></div>
+<div class="absolute inset-0 radar-scan rounded-full"></div>
+<!-- Pulse Dots -->
+<div class="absolute top-1/4 right-1/3 w-2 h-2 bg-secondary-container rounded-full shadow-[0_0_10px_#16ff9e] animate-pulse"></div>
+<div class="absolute bottom-1/3 left-1/4 w-1.5 h-1.5 bg-cyan-400 rounded-full shadow-[0_0_8px_#00f2ff]"></div>
+<div class="absolute top-1/2 right-10 w-2 h-2 bg-error rounded-full shadow-[0_0_10px_#ffb4ab]"></div>
+<div class="text-center z-10">
+<span class="block text-4xl font-headline font-black text-cyan-400 glow-cyan">24</span>
+<span class="text-[9px] font-headline tracking-widest text-slate-400">ACTIVE NODES</span>
+</div>
+</div>
+<div class="mt-8 space-y-4">
+<div class="flex justify-between items-center text-[10px] font-headline border-b border-cyan-500/5 pb-2">
+<span class="text-slate-500">FED RESERVE FEED</span>
+<span class="text-secondary-container">STABLE</span>
+</div>
+<div class="flex justify-between items-center text-[10px] font-headline border-b border-cyan-500/5 pb-2">
+<span class="text-slate-500">ECB DIRECTIVES</span>
+<span class="text-secondary-container">POLLING</span>
+</div>
+<div class="flex justify-between items-center text-[10px] font-headline border-b border-cyan-500/5 pb-2">
+<span class="text-slate-500">SEC FILINGS</span>
+<span class="text-error animate-pulse">LATENCY HIGH</span>
+</div>
+</div>
+</section>
+<section class="glass-panel p-6 rounded-xl">
+<h3 class="font-headline font-bold text-xs tracking-widest text-cyan-400 uppercase mb-4">System Integrity</h3>
+<div class="space-y-4">
+<div>
+<div class="flex justify-between text-[10px] font-headline mb-1">
+<span class="text-slate-400 uppercase">AI Inference Load</span>
+<span class="text-cyan-400">42%</span>
+</div>
+<div class="w-full h-1 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-cyan-400 w-[42%] shadow-[0_0_10px_#00f2ff]"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-[10px] font-headline mb-1">
+<span class="text-slate-400 uppercase">Data Throughput</span>
+<span class="text-secondary-container">98.2 MB/s</span>
+</div>
+<div class="w-full h-1 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-secondary-container w-[85%] shadow-[0_0_10px_#16ff9e]"></div>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Column 2: Intelligence Feed -->
+<div class="col-span-5 space-y-6">
+<div class="flex justify-between items-end mb-2">
+<div>
+<h2 class="font-headline text-lg font-bold text-on-background tracking-tight">Intelligence Stream</h2>
+<p class="text-xs text-slate-500">Real-time regulatory pulse</p>
+</div>
+<div class="flex gap-2">
+<span class="px-2 py-1 bg-cyan-500/10 text-cyan-400 text-[9px] font-bold rounded border border-cyan-500/20">LIVE SCANNING</span>
+</div>
+</div>
+<!-- Feed Cards -->
+<div class="space-y-4 overflow-y-auto max-h-[calc(100vh-200px)] pr-2 scrollbar-hide">
+<!-- Card 1 -->
+<div class="glass-panel p-5 rounded-xl border-l-2 border-l-secondary-container relative hover:translate-x-2 transition-transform cursor-pointer group">
+<div class="absolute top-4 right-4">
+<span class="px-2 py-0.5 bg-secondary-container/10 text-secondary-container text-[8px] font-bold rounded-sm border border-secondary-container/30 uppercase tracking-widest">Compliance Safe</span>
+</div>
+<div class="flex gap-4">
+<div class="w-12 h-12 bg-surface-container-high rounded flex items-center justify-center border border-outline-variant/30 text-cyan-400 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined" data-icon="account_balance">account_balance</span>
+</div>
+<div class="flex-1">
+<div class="flex items-center gap-2 mb-1">
+<span class="text-[9px] font-headline tracking-widest text-slate-500 uppercase">Source: SEC.gov</span>
+<span class="text-[9px] text-slate-600">• 4 mins ago</span>
+</div>
+<h4 class="text-sm font-headline font-semibold text-cyan-100 mb-2 leading-tight">New Guidance on Digital Asset Custody Requirements</h4>
+<p class="text-xs text-slate-400 leading-relaxed mb-3">Staff Accounting Bulletin No. 121 revisions proposed to accommodate Tier 1 banking integrations for custody services.</p>
+<div class="flex gap-2">
+<span class="text-[10px] text-cyan-400/70 bg-cyan-500/5 px-2 py-0.5 rounded border border-cyan-500/10 uppercase">#Banking</span>
+<span class="text-[10px] text-cyan-400/70 bg-cyan-500/5 px-2 py-0.5 rounded border border-cyan-500/10 uppercase">#Crypto</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="glass-panel p-5 rounded-xl border-l-2 border-l-error relative hover:translate-x-2 transition-transform cursor-pointer group">
+<div class="absolute top-4 right-4">
+<span class="px-2 py-0.5 bg-error/10 text-error text-[8px] font-bold rounded-sm border border-error/30 uppercase tracking-widest">Immediate Action</span>
+</div>
+<div class="flex gap-4">
+<div class="w-12 h-12 bg-surface-container-high rounded flex items-center justify-center border border-outline-variant/30 text-error group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined" data-icon="warning">warning</span>
+</div>
+<div class="flex-1">
+<div class="flex items-center gap-2 mb-1">
+<span class="text-[9px] font-headline tracking-widest text-slate-500 uppercase">Source: EU Parliament</span>
+<span class="text-[9px] text-slate-600">• 12 mins ago</span>
+</div>
+<h4 class="text-sm font-headline font-semibold text-cyan-100 mb-2 leading-tight">MiCA Phase 2: Implementation Deadline Accelerated</h4>
+<p class="text-xs text-slate-400 leading-relaxed mb-3">Critical updates to Stablecoin issuer reporting standards. Non-compliance may lead to immediate license suspension in Eurozone.</p>
+<div class="flex gap-2">
+<span class="text-[10px] text-error/70 bg-error/5 px-2 py-0.5 rounded border border-error/10 uppercase">#MiCA</span>
+<span class="text-[10px] text-error/70 bg-error/5 px-2 py-0.5 rounded border border-error/10 uppercase">#EU</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="glass-panel p-5 rounded-xl border-l-2 border-l-cyan-400 relative hover:translate-x-2 transition-transform cursor-pointer group">
+<div class="absolute top-4 right-4">
+<span class="px-2 py-0.5 bg-cyan-400/10 text-cyan-400 text-[8px] font-bold rounded-sm border border-cyan-400/30 uppercase tracking-widest">AI Summary</span>
+</div>
+<div class="flex gap-4">
+<div class="w-12 h-12 bg-surface-container-high rounded flex items-center justify-center border border-outline-variant/30 text-cyan-400 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined" data-icon="psychology">psychology</span>
+</div>
+<div class="flex-1">
+<div class="flex items-center gap-2 mb-1">
+<span class="text-[9px] font-headline tracking-widest text-slate-500 uppercase">System: LLM Synthesis</span>
+<span class="text-[9px] text-slate-600">• 45 mins ago</span>
+</div>
+<h4 class="text-sm font-headline font-semibold text-cyan-100 mb-2 leading-tight">Cross-Jurisdictional Conflict Detected</h4>
+<p class="text-xs text-slate-400 leading-relaxed mb-3">Sentiment analysis indicates regulatory divergence between UK FCA and Hong Kong SFC regarding AI-driven trading algorithms.</p>
+<div class="flex gap-2">
+<span class="text-[10px] text-cyan-400/70 bg-cyan-500/5 px-2 py-0.5 rounded border border-cyan-500/10 uppercase">#AI_GOVERNANCE</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Column 3: Action Panel -->
+<div class="col-span-4 space-y-6">
+<section class="glass-panel p-6 rounded-xl border-t-4 border-t-cyan-500">
+<div class="flex items-center justify-between mb-6">
+<h3 class="font-headline font-bold text-sm tracking-tighter text-cyan-400 uppercase">Proposed AI Amendment</h3>
+<span class="material-symbols-outlined text-cyan-400 animate-spin text-sm" style="animation-duration: 3s;">settings_input_component</span>
+</div>
+<div class="bg-surface-container-lowest p-4 rounded border border-cyan-500/10 mb-6">
+<p class="text-xs text-slate-300 font-mono leading-relaxed">
+<span class="text-cyan-400 font-bold">SENTINEL_ADVISORY:</span> Adjusting internal risk threshold for 'Synthetic Market Volatility' by <span class="text-secondary-container">+15.4%</span> based on latest MiCA accelerated timeline.
+                        </p>
+</div>
+<div class="space-y-4 mb-6">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary-container text-sm">check_circle</span>
+<span class="text-[10px] font-headline uppercase tracking-widest text-slate-300">Auto-Update Compliance Log</span>
+</div>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary-container text-sm">check_circle</span>
+<span class="text-[10px] font-headline uppercase tracking-widest text-slate-300">Notify Stakeholder Board</span>
+</div>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-slate-600 text-sm">radio_button_unchecked</span>
+<span class="text-[10px] font-headline uppercase tracking-widest text-slate-500">Legal Counsel Validation Required</span>
+</div>
+</div>
+<div class="flex gap-3">
+<button class="flex-1 bg-cyan-500 text-on-primary py-3 rounded font-headline font-bold text-[10px] uppercase tracking-widest shadow-[0_0_15px_rgba(0,242,255,0.2)] hover:shadow-[0_0_25px_rgba(0,242,255,0.4)] transition-all">
+                            Approve Action
+                        </button>
+<button class="flex-1 border border-outline-variant/30 text-slate-400 py-3 rounded font-headline font-bold text-[10px] uppercase tracking-widest hover:bg-white/5 transition-all">
+                            Dismiss
+                        </button>
+</div>
+</section>
+<section class="glass-panel p-6 rounded-xl">
+<h3 class="font-headline font-bold text-xs tracking-widest text-cyan-400 uppercase mb-4">Policy Impact Vectors</h3>
+<div class="flex flex-wrap gap-2">
+<span class="px-3 py-1.5 bg-surface-container-high rounded text-[10px] font-headline text-cyan-100 border border-cyan-500/10 flex items-center gap-2">
+<span class="w-1.5 h-1.5 bg-secondary-container rounded-full"></span>
+                            Operational: Low
+                        </span>
+<span class="px-3 py-1.5 bg-surface-container-high rounded text-[10px] font-headline text-cyan-100 border border-cyan-500/10 flex items-center gap-2">
+<span class="w-1.5 h-1.5 bg-tertiary-container rounded-full"></span>
+                            Capital: Mid
+                        </span>
+<span class="px-3 py-1.5 bg-surface-container-high rounded text-[10px] font-headline text-cyan-100 border border-cyan-500/10 flex items-center gap-2">
+<span class="w-1.5 h-1.5 bg-error rounded-full"></span>
+                            Legal: Critical
+                        </span>
+<span class="px-3 py-1.5 bg-surface-container-high rounded text-[10px] font-headline text-cyan-100 border border-cyan-500/10 flex items-center gap-2">
+<span class="w-1.5 h-1.5 bg-cyan-400 rounded-full"></span>
+                            Technical: High
+                        </span>
+</div>
+</section>
+<div class="glass-panel rounded-xl overflow-hidden p-0 relative h-40">
+<div class="absolute inset-0 bg-gradient-to-t from-slate-950 to-transparent z-10"></div>
+<img class="w-full h-full object-cover" data-alt="Holographic visualization of a global network with connecting light nodes and digital data streams over a dark blue background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBJ6ghqDFBIuvgjpW-p9J51vy68WHH9pSqP8FGClWJ4hTWoyVHCLBXv3EQ75yP9OB_S97zbFethpiSjUv8zHddnQY8fRBBjdH_XR_RCX-UiRDfFdJG0ABwyDjKptUfErA1fFYihCSApA1GmW-T_oDfpPOs67vSi_yuSWdSlF3qLcQd_xrNA-k7EH-sv-ws7C7zH_en52avtVUzVrvH0EQ2D4g0JIoev--cd2hFHx2dOuU-zsZ1GuHetfkZZQQ5z-cr0boEzH6BsXOxT"/>
+<div class="absolute bottom-4 left-6 z-20">
+<p class="text-[10px] font-headline text-cyan-400 uppercase font-bold">Global Regulatory Heatmap</p>
+<p class="text-[9px] text-slate-400">View detailed jurisdiction breakdown</p>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- UI Overlay elements -->
+<div class="fixed bottom-8 right-8 z-50">
+<button class="w-14 h-14 bg-cyan-500 rounded-full flex items-center justify-center text-on-primary shadow-[0_0_30px_rgba(0,242,255,0.4)] hover:scale-110 active:scale-95 transition-all">
+<span class="material-symbols-outlined text-3xl">chat_bubble</span>
+</button>
+</div>
+</body></html>
