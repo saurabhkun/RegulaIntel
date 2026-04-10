@@ -126,4 +126,4 @@ Finally, open your browser to `http://localhost:5173/` and hit the **AUTO-ANALYZ
 
 ---
 
-> Built intelligently for Sunhack Hackathon 2024.
+> Built intelligently for Sunhack Hackathon 2026.
