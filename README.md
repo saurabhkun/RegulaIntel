@@ -28,10 +28,65 @@ Traditional compliance teams take weeks to digest new financial circulars. Enter
 
 ---
 
-### 🛠️ Architecture Stack
-- **AI Core:** LangChain, LangGraph (Multi-Agent Workflow), SentenceTransformers, Groq LLM
-- **Backend Infrastructure:** FastAPI, Python, PyMuPDF, BeautifulSoup (Scraping)
-- **Frontend Dashboard:** React, Vite, Framer-Motion (Micro-animations), TailwindCSS v4
+### 🛠️ Architecture Tech Stack
+- **AI Core Intelligence:** LangChain, LangGraph (Multi-Agent Routing), `SentenceTransformers` (Semantic Search), Groq (LLM Inference)
+- **Backend Infrastructure:** FastAPI, Python, PyMuPDF (Document Parsing), Web Scraping (`BeautifulSoup`, `feedparser`)
+- **Frontend Presentation:** React, Vite, Framer-Motion (Micro-animations), TailwindCSS v4, Sonner (Toasts)
+- **Local Data Storage:** Local Directory Arrays (Production maps to Pinecone/AWS S3)
+
+---
+
+### 📂 Repository Structure
+```text
+RegulaIntel/
+│
+├── agents/                  # Multi-Agent LangGraph intelligence
+│   ├── diff.py              # Analyzes exact semantic shifts
+│   ├── impact.py            # Maps shifts to internal policies
+│   ├── drafter.py           # Auto-generates handbook amendments
+│   └── workflow.py          # The LangGraph Supervisor configuration
+│
+├── api.py                   # FastAPI Application Server (Backend)
+├── app.py                   # Legacy Streamlit UI (Fallback)
+│
+├── data/                    # Vector Mock Data
+│   ├── circulars/           # Local demo PDFs
+│   ├── incoming/            # Destination for active Web Scraper
+│   └── internal/            # Company Master Policy DB files
+│
+├── frontend/                # React / Vite Dashboard (Tailwind + Framer)
+│   ├── src/                 
+│   │   ├── App.jsx          # Primary UI Interface & API Hooks
+│   │   └── index.css        # Premium Glassmorphism & Blob Styles
+│   └── package.json         
+│
+└── utils/                   # Shared Infrastructure
+    ├── scraper.py           # Chron-based BeautifulSoup logic
+    ├── pdf_processor.py     # Binary PDF extraction algorithms
+    └── report_generator.py  # FPDF Compliance Audit PDF Exporter
+```
+
+---
+
+### 📊 Autonomous System Flowchart
+```mermaid
+graph TD
+    A[Global Web Scraper] -->|Downloads SEC/RBI PDF 24/7| B(PyMuPDF Extractor)
+    B --> C{LangGraph Supervisor}
+    
+    C --> D(Diff Agent)
+    D -->|Calculates Semantic Shifts & Vectors| E(Impact Agent)
+    
+    E -->|Maps against Internal Handbook| F(Drafter Agent)
+    F -->|Synthesizes Legal Amendment| G[React Glassmorphism UI]
+    
+    G -->|One-Click Export| H[Compliance Audit PDF]
+    
+    style A fill:#10b981,stroke:#047857,stroke-width:2px,color:#fff
+    style C fill:#3b82f6,stroke:#1d4ed8,stroke-width:2px,color:#fff
+    style G fill:#8b5cf6,stroke:#6d28d9,stroke-width:2px,color:#fff
+    style H fill:#0f172a,stroke:#000,stroke-width:2px,color:#fff
+```
 
 ---
 
