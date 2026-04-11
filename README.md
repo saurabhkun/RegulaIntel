@@ -17,6 +17,18 @@
 A comprehensive autonomous web application for live regulatory compliance tracking, version differential scanning, and expert AI-driven policy insights.
 
 
+## 📊 Project Presentation
+
+<div align="center">
+  <a href="assets/ppt.pdf" target="_blank">
+    <img src="https://img.shields.io/badge/📥%20View%20Presentation-Click%20Here-6366f1?style=for-the-badge&logo=adobeacrobatreader&logoColor=white" alt="View Presentation" />
+  </a>
+</div>
+
+> 🖥️ **[Click here to open the full project presentation (PDF)](assets/ppt.pdf)** — opens in a new tab.
+
+---
+
 ## 📸 Core Features Gallery
 To keep it clean and high-impact for the judges, we recommend these three essential screenshots:
 1. **The Intelligence Hub**: ![Main Dashboard](assets/main_dashboard.png)
