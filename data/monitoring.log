@@ -85,3 +85,6 @@
 [2026-04-10 14:45:34] No new circulars found
 [2026-04-10 14:45:34] ⏳ Next check in 30s...
 [2026-04-10 14:45:37] ⛔ Monitoring stopped by user
+[2026-04-11 05:17:49] 🎬 Running DEMO workflow
+[2026-04-11 05:17:49] Processing: data/incoming/demo_new.pdf
+[2026-04-11 05:18:03] ✅ Processed demo_new.pdf | Impacts: 4 | Amendments: 4

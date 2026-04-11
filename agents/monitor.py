@@ -47,6 +47,10 @@ def _save_last_checked():
     with open(LAST_CHECKED_FILE, 'w') as f:
         json.dump({"last_checked": datetime.now().isoformat()}, f)
 
+HEADERS = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+}
+
 def _fetch_rbi_circulars() -> List[Dict]:
     """Fetch latest RBI circulars from RSS feeds."""
     if not feedparser:
@@ -79,7 +83,7 @@ def _fetch_sebi_circulars() -> List[Dict]:
         from bs4 import BeautifulSoup
         
         for feed_type, url in SEBI_URLS.items():
-            response = requests.get(url, timeout=10)
+            response = requests.get(url, headers=HEADERS, timeout=10)
             response.raise_for_status()
             soup = BeautifulSoup(response.content, 'html.parser')
             
@@ -107,7 +111,7 @@ def _fetch_mca_notices() -> List[Dict]:
         from bs4 import BeautifulSoup
         
         for notice_type, url in MCA_URLS.items():
-            response = requests.get(url, timeout=10)
+            response = requests.get(url, headers=HEADERS, timeout=10)
             response.raise_for_status()
             soup = BeautifulSoup(response.content, 'html.parser')
             
@@ -135,7 +139,7 @@ def _fetch_irdai_circulars() -> List[Dict]:
         from bs4 import BeautifulSoup
         
         for doc_type, url in IRDAI_URLS.items():
-            response = requests.get(url, timeout=10)
+            response = requests.get(url, headers=HEADERS, timeout=10)
             response.raise_for_status()
             soup = BeautifulSoup(response.content, 'html.parser')
             
@@ -158,7 +162,7 @@ def _fetch_irdai_circulars() -> List[Dict]:
 def _download_pdf(url: str, filename: str) -> bool:
     """Download PDF from URL and save locally."""
     try:
-        response = requests.get(url, timeout=30)
+        response = requests.get(url, headers=HEADERS, timeout=30)
         response.raise_for_status()
         
         os.makedirs("data/incoming", exist_ok=True)

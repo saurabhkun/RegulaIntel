@@ -311,13 +311,23 @@ async def generate_report(data: dict):
         c_objs = [MockObj(c) for c in changes]
         a_objs = [MockObj(a) for a in amendments]
         
+        # Ensure output directory exists
+        os.makedirs("data/reports", exist_ok=True)
+        report_id = str(uuid.uuid4())[:8]
+        report_path = os.path.join("data/reports", f"report_{report_id}.pdf")
+        
         rg = ReportGenerator()
-        report_path = "compliance_report.pdf"
         rg.generate_report(c_objs, a_objs, report_path)
         
-        return FileResponse(report_path, filename="RegulaIntel_Report.pdf", media_type="application/pdf")
+        # Verify file was created and is readable
+        if not os.path.exists(report_path):
+            return JSONResponse(status_code=500, content={"message": "PDF generation failed - file not created"})
+        
+        return FileResponse(report_path, filename=f"RegulaIntel_Report_{report_id}.pdf", media_type="application/pdf")
     except Exception as e:
-        return JSONResponse(status_code=500, content={"message": str(e)})
+        import traceback
+        traceback.print_exc()
+        return JSONResponse(status_code=500, content={"message": f"PDF generation error: {str(e)}"})
 
 
 # Live Monitoring Endpoints

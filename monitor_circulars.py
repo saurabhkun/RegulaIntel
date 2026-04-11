@@ -157,10 +157,14 @@ def _fetch_mca_notices():
     
     return notices
 
+HEADERS = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+}
+
 def _download_pdf(url: str, filename: str) -> bool:
     """Download PDF from URL and save locally."""
     try:
-        response = requests.get(url, timeout=30)
+        response = requests.get(url, headers=HEADERS, timeout=30)
         response.raise_for_status()
         
         os.makedirs("data/incoming", exist_ok=True)
@@ -175,7 +179,7 @@ def _download_pdf(url: str, filename: str) -> bool:
         log_message(f"Error downloading {url}: {e}")
         return False
 
-def check_new_circulars(mode: str = "demo"):
+def _check_new_circulars_local(mode: str = "demo"):
     """Check for new regulatory circulars from RBI, SEBI, and MCA."""
     if mode == "demo":
         incoming_dir = os.path.join("data", "incoming")
@@ -266,7 +270,7 @@ def run_live_monitor(interval: int = None, continuous: bool = False):
             log_message("🔄 Checking for new circulars...")
             
             # Fetch new circulars
-            new_pdfs = check_new_circulars(mode="live")
+            new_pdfs = _check_new_circulars_local(mode="live")
             
             if new_pdfs:
                 log_message(f"Found {len(new_pdfs)} new circulars")

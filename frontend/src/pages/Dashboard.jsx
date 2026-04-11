@@ -3,8 +3,10 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Toaster, toast } from 'sonner';
 import { useAuth } from '../contexts/AuthContext';
 import { supabase } from '../utils/supabaseClient';
+import { Link, useLocation } from 'react-router-dom';
 
 export default function Dashboard() {
+  const location = useLocation();
   const [oldFile, setOldFile] = useState(null);
   const [newFile, setNewFile] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -68,6 +70,12 @@ export default function Dashboard() {
         headers: headers,
         body: formData
       });
+      
+      if (!res.ok) {
+        const errData = await res.json();
+        throw new Error(errData.message || "Backend error");
+      }
+
       const data = await res.json();
       setResults(data);
       setSelectedIdx(0);
@@ -86,6 +94,7 @@ export default function Dashboard() {
       const res = await fetch("http://localhost:8000/api/monitor/check-once/live", {
         headers: headers
       });
+      if (!res.ok) throw new Error("Scraper service unavailable");
       const data = await res.json();
       setTrackResult(data);
       toast.success("Live Scrape successful!");
@@ -104,6 +113,10 @@ export default function Dashboard() {
         method: "POST",
         headers: headers
       });
+      if (!res.ok) {
+        const errData = await res.json();
+        throw new Error(errData.message || "Live analysis failed");
+      }
       const data = await res.json();
       if(data.message) {
         toast.error(data.message);
@@ -133,6 +146,12 @@ export default function Dashboard() {
         },
         body: JSON.stringify(results)
       });
+
+      if (!res.ok) {
+        const errData = await res.json();
+        throw new Error(errData.message || "Failed to generate report");
+      }
+
       const blob = await res.blob();
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement('a');
@@ -141,7 +160,7 @@ export default function Dashboard() {
       a.click();
       toast.success("Professional Audit exported!");
     } catch (e) {
-      toast.error("Failed to download PDF.");
+      toast.error("Failed to download PDF: " + e.message);
     }
   };
 
@@ -149,6 +168,15 @@ export default function Dashboard() {
     await signOut();
     toast.success("Logged out successfully");
   };
+
+  // Helper to get PDF URL for preview
+  const [oldUrl, setOldUrl] = useState(null);
+  const [newUrl, setNewUrl] = useState(null);
+
+  useEffect(() => {
+    if (oldFile) setOldUrl(URL.createObjectURL(oldFile));
+    if (newFile) setNewUrl(URL.createObjectURL(newFile));
+  }, [oldFile, newFile]);
 
   const changes = results?.changes || [];
   const impacts = results?.impacts || [];
@@ -181,11 +209,21 @@ export default function Dashboard() {
             </div>
           </div>
         </div>
-        <nav className="flex-1 mt-4">
-          <div className="bg-zinc-900 border-r-2 border-indigo-500 text-zinc-50 px-6 py-4 flex items-center gap-4 cursor-pointer relative overflow-hidden transition-all duration-300">
-            <span className="material-symbols-outlined text-indigo-400">hub</span>
-            <span className="uppercase tracking-widest text-[11px] font-bold">Intelligence Hub</span>
-          </div>
+        <nav className="flex-1 mt-4 px-3 space-y-1.5">
+          <Link to="/dashboard" className={`flex items-center gap-4 px-4 py-3 rounded-xl transition-all duration-200 group ${location.pathname === '/dashboard' ? 'bg-indigo-500/10 text-indigo-400 border border-indigo-500/20' : 'text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800/30'}`}>
+            <span className={`material-symbols-outlined text-lg ${location.pathname === '/dashboard' ? 'text-indigo-400' : 'text-zinc-500 group-hover:text-zinc-300'}`}>hub</span>
+            <span className="uppercase tracking-widest text-[10px] font-bold">Intelligence Hub</span>
+          </Link>
+          
+          <Link to="/chat" className={`flex items-center gap-4 px-4 py-3 rounded-xl transition-all duration-200 group ${location.pathname === '/chat' ? 'bg-indigo-500/10 text-indigo-400 border border-indigo-500/20' : 'text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800/30'}`}>
+            <span className={`material-symbols-outlined text-lg ${location.pathname === '/chat' ? 'text-indigo-400' : 'text-zinc-500 group-hover:text-zinc-300'}`}>memory</span>
+            <span className="uppercase tracking-widest text-[10px] font-bold">Sentinel Chat</span>
+          </Link>
+
+          <Link to="/history" className={`flex items-center gap-4 px-4 py-3 rounded-xl transition-all duration-200 group ${location.pathname === '/history' ? 'bg-indigo-500/10 text-indigo-400 border border-indigo-500/20' : 'text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800/30'}`}>
+            <span className={`material-symbols-outlined text-lg ${location.pathname === '/history' ? 'text-indigo-400' : 'text-zinc-500 group-hover:text-zinc-300'}`}>timeline</span>
+            <span className="uppercase tracking-widest text-[10px] font-bold">Historical Vault</span>
+          </Link>
         </nav>
         <div className="mt-auto px-6 space-y-4">
           <div className="pt-6 border-t border-zinc-800/80">
@@ -258,6 +296,29 @@ export default function Dashboard() {
                    </button>
                  </div>
               </div>
+
+              {/* PDF Preview Segment */}
+              {(oldUrl || newUrl) && (
+                <div className="border-t border-zinc-800/80 pt-6 mb-6">
+                  <h4 className="text-[10px] text-zinc-400 uppercase tracking-widest mb-4 font-bold flex items-center gap-1.5">
+                    <span className="material-symbols-outlined text-[13px]">visibility</span> Document Preview
+                  </h4>
+                  <div className="flex gap-2">
+                    {oldUrl && (
+                      <a href={oldUrl} target="_blank" rel="noreferrer" className="flex-1 bg-zinc-900 border border-zinc-800 p-3 rounded-lg flex flex-col items-center hover:bg-zinc-800 transition-all">
+                        <span className="material-symbols-outlined text-zinc-500 text-lg mb-1">picture_as_pdf</span>
+                        <span className="text-[8px] uppercase tracking-widest text-zinc-400 font-bold">Baseline</span>
+                      </a>
+                    )}
+                    {newUrl && (
+                      <a href={newUrl} target="_blank" rel="noreferrer" className="flex-1 bg-zinc-900 border border-zinc-800 p-3 rounded-lg flex flex-col items-center hover:bg-zinc-800 transition-all">
+                        <span className="material-symbols-outlined text-zinc-500 text-lg mb-1">picture_as_pdf</span>
+                        <span className="text-[8px] uppercase tracking-widest text-zinc-400 font-bold">Update</span>
+                      </a>
+                    )}
+                  </div>
+                </div>
+              )}
 
               {/* System Status Segment */}
               <div className="border-t border-zinc-800/80 pt-8">
